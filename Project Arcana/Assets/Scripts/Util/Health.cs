@@ -1,30 +1,32 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] 
     private float maxHealth;
-    private float _currentHealth;
+    [SerializeField] 
+    private float currentHealth;
 
     private void Awake()
     {
-        _currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
 
     public virtual void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
-        _currentHealth = Mathf.Max(_currentHealth, 0f);
-        if (_currentHealth <= 0) Die();
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+        if (currentHealth <= 0) Die();
     }
     
-    public virtual void Heal(float heal)
+    public void Heal(float heal)
     {
-        _currentHealth += heal;
-        _currentHealth = Mathf.Min(maxHealth, _currentHealth);
+        currentHealth += heal;
+        currentHealth = Mathf.Min(maxHealth, currentHealth);
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         gameObject.SetActive(false);
     }
