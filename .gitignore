@@ -100,3 +100,4 @@ InitTestScene*.unity*
 
 # Ignore imported assets
 Assets/Imports/**
+/Project Arcana/Library
