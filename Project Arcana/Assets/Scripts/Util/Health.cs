@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
     public float maxHealth;
     public float currentHealth;
+    public bool isDead => currentHealth <= 0f;
 
     public virtual void Awake()
     {
