@@ -6,9 +6,10 @@ public class PlayerHealth : Health
     private float _currentShield;
     private float _absShield;
 
-    public void Init()
+    public override void Awake()
     {
         _currentShield = _defaultShield;
+        base.Awake();
     }
     
     private float TakeDamageShield(float damage)

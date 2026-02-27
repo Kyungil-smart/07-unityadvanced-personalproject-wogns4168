@@ -1,14 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] 
-    private float maxHealth;
-    [SerializeField] 
-    private float currentHealth;
+    public float maxHealth;
+    public float currentHealth;
 
-    private void Awake()
+    public virtual void Awake()
     {
         currentHealth = maxHealth;
     }
