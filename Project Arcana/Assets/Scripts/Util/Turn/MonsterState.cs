@@ -1,4 +1,7 @@
-﻿public class MonsterState : ITurn
+﻿using System.Collections;
+using UnityEngine;
+
+public class MonsterState : ITurn
 {
     TurnSystem _turnSystem;
 
@@ -6,20 +9,21 @@
     {
         _turnSystem = turnSystem;
     }
-    
-    
+
+
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Entering MonsterState");
+        BattleManager.Instance.MonsterTurnStart();
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        // 상태이상이 있다면 효과 적용 (poison)
     }
+    
 }

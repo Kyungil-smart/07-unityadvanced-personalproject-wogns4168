@@ -1,8 +1,8 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class PoolManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static PoolManager Instance { get; private set; }
     
     private void Awake()
     {

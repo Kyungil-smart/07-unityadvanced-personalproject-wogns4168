@@ -1,4 +1,6 @@
-﻿public class PlayerState : ITurn
+﻿using UnityEngine;
+
+public class PlayerState : ITurn
 {
     TurnSystem _turnSystem;
 
@@ -8,16 +10,20 @@
     }
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Entering PlayerState");
+        // 플레이어 에너지 회복
+        // 카드 드로우
     }
 
     public void Update()
     {
-        throw new System.NotImplementedException();
+        // 카드 사용 로직
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        // 현재 카드 모두 버림
+        // 상태이상이 있다면 효과 적용 (poison)
     }
+    
 }
