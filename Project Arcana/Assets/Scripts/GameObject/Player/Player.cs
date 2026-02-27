@@ -1,19 +1,18 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Player : MonoBehaviour, ITargetable
+public class Player : PlayerHealth, ITargetable
 {
     public void OnHoverEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnHoverExit()
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnSelect()
     {
-        throw new System.NotImplementedException();
     }
 }
