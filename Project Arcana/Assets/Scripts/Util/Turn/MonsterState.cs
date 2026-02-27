@@ -1,5 +1,13 @@
 ﻿public class MonsterState : ITurn
 {
+    TurnSystem _turnSystem;
+
+    public MonsterState(TurnSystem turnSystem)
+    {
+        _turnSystem = turnSystem;
+    }
+    
+    
     public void Enter()
     {
         throw new System.NotImplementedException();
