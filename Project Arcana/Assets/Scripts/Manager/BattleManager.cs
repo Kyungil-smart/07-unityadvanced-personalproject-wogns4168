@@ -31,6 +31,13 @@ public class BattleManager : MonoBehaviour
     private void Update()
     {
         _turnSystem.Update();
+        /*if (Input.GetKeyDown(KeyCode.R)) // 몬스터 데미지 입히는 테스트 코드 
+        {
+            foreach (var monster in _monsters)
+            {
+                monster.TakeDamage(10);
+            }   
+        }*/
     }
     
     public void OnClickEndPlayerTurn()
