@@ -1726,6 +1726,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1602945047779073592, guid: 01099a903bd1c2b408bcfc97c437857c, type: 3}
   m_PrefabInstance: {fileID: 829196576768731106}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &904644523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 904644525}
+  - component: {fileID: 904644524}
+  m_Layer: 0
+  m_Name: Deck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &904644524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904644523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7d96e7716d91c1489ed2040adfe289a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Deck
+  deckPool: []
+  drawPile: []
+  hand: []
+  discardPile: []
+  exhaustPile: []
+  cardPrefab: {fileID: 0}
+--- !u!4 &904644525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904644523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1001570940
 GameObject:
   m_ObjectHideFlags: 0
@@ -3695,3 +3745,4 @@ SceneRoots:
   - {fileID: 7272487075616037816}
   - {fileID: 570105540}
   - {fileID: 1393491258}
+  - {fileID: 904644525}

@@ -4,10 +4,13 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public string cardName;
+    public string description;
     public int cost;
     public bool isExhaust;
-    public string type;
+    public CardType type;
     public float attackValue;
     public float defenseValue;
     public float healValue;
+    
+    public Sprite cardImage;
 }
