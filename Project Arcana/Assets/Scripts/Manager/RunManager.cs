@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RunManager : MonoBehaviour
 {
     public static RunManager Instance { get; private set; }
+    
+    public List<CardData> startingDeck = new List<CardData>();
+    
+    public Deck currentDeck { get; private set; }
 
     private void Awake()
     {
@@ -14,5 +20,17 @@ public class RunManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        StartNewRun();
+    }
+
+    public void StartNewRun()
+    {
+        currentDeck = new Deck();
+        currentDeck.Init(startingDeck);
     }
 }

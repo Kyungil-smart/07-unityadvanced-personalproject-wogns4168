@@ -7,8 +7,12 @@ public class BattleManager : MonoBehaviour
 {
     public static BattleManager Instance { get; private set; }
 
-    private TurnSystem _turnSystem;
     [SerializeField] private List<MonsterBase> _monsters;
+    [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Transform handArea;
+
+    private List<CardView> _currentHandViews = new List<CardView>();
+    private TurnSystem _turnSystem;
 
     private void Awake()
     {
@@ -19,37 +23,60 @@ public class BattleManager : MonoBehaviour
         }
 
         Instance = this;
-        
+
         _monsters = new List<MonsterBase>(
             FindObjectsByType<MonsterBase>(FindObjectsSortMode.None)
         );
-        
+
         _turnSystem = new TurnSystem();
         _turnSystem.Init();
+    }
+
+    private void Start()
+    {
+        DrawCards(5);
     }
 
     private void Update()
     {
         _turnSystem.Update();
-        /*if (Input.GetKeyDown(KeyCode.R)) // 몬스터 데미지 입히는 테스트 코드 
-        {
-            foreach (var monster in _monsters)
-            {
-                monster.TakeDamage(10);
-            }   
-        }*/
     }
-    
+
+    public void DrawCards(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            CardData card = RunManager.Instance.currentDeck.Draw();
+            if (card == null) return;
+
+            GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+            obj.transform.SetParent(handArea, false);
+
+            CardView view = obj.GetComponent<CardView>();
+            view.Setup(card);
+
+            _currentHandViews.Add(view);
+        }
+    }
+
+    public void OnCardUsed(CardView cardView)
+    {
+        RunManager.Instance.currentDeck.UseCard(cardView.GetCardData());
+        _currentHandViews.Remove(cardView);
+
+        PoolManager.Instance.Despawn(cardView.gameObject, cardPrefab);
+    }
+
     public void OnClickEndPlayerTurn()
     {
         _turnSystem.ChangeTurn(_turnSystem.monsterState);
     }
-    
+
     public void MonsterTurnStart()
     {
         StartCoroutine(MonsterTurnRoutine());
     }
-    
+
     private IEnumerator MonsterTurnRoutine()
     {
         foreach (var monster in _monsters)
@@ -59,7 +86,7 @@ public class BattleManager : MonoBehaviour
 
             yield return StartCoroutine(monster.Act());
         }
-        
+
         _turnSystem.ChangeTurn(_turnSystem.playerState);
     }
 }

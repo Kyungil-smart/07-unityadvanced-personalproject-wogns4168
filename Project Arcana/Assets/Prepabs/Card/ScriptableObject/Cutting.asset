@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cutting
   m_EditorClassIdentifier: Assembly-CSharp::CardData
   cardName: "\uBCA0\uAE30"
-  description: "\uD53C\uD574\uB97C {} \uC900\uB2E4."
+  description: "\uD53C\uD574\uB97C {0} \uC900\uB2E4."
   cost: 1
   isExhaust: 0
   type: 0

@@ -1,48 +1,44 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Deck : MonoBehaviour
+public class Deck
 {
-    public List<CardData> deckPool = new List<CardData>(); // 전체 카드
-    public List<CardData> drawPile = new List<CardData>();
-    public List<CardData> hand = new List<CardData>();
-    public List<CardData> discardPile = new List<CardData>();
-    public List<CardData> exhaustPile = new List<CardData>();
+    public List<CardData> drawPile = new();
+    public List<CardData> hand = new();
+    public List<CardData> discardPile = new();
+    public List<CardData> exhaustPile = new();
 
-    [SerializeField] private GameObject cardPrefab;
-
-    void Start()
+    public void Init(List<CardData> deckPool)
     {
         drawPile = new List<CardData>(deckPool);
         Shuffle(drawPile);
     }
 
-    // 랜덤 카드 뽑기
-    public CardView DrawRandomCard()
+    public CardData Draw()
     {
-        if (drawPile.Count == 0) ReshuffleDiscard();
-        if (drawPile.Count == 0) return null;
+        if (drawPile.Count == 0)
+            ReshuffleDiscard();
 
-        int index = Random.Range(0, drawPile.Count);
-        CardData data = drawPile[index];
-        drawPile.RemoveAt(index);
-        hand.Add(data);
+        if (drawPile.Count == 0)
+            return null;
 
-        GameObject cardGO = PoolManager.Instance.Spawn(cardPrefab);
-        CardView cardView = cardGO.GetComponent<CardView>();
-        cardView.Setup(data);
-        return cardView;
+        CardData card = drawPile[0];
+        drawPile.RemoveAt(0);
+        hand.Add(card);
+
+        return card;
     }
 
-    // 카드 사용
     public void UseCard(CardData card)
     {
         if (!hand.Contains(card)) return;
+
         hand.Remove(card);
 
-        if (card.isExhaust) exhaustPile.Add(card);
-        else discardPile.Add(card);
+        if (card.isExhaust)
+            exhaustPile.Add(card);
+        else
+            discardPile.Add(card);
     }
 
     private void ReshuffleDiscard()
@@ -52,8 +48,12 @@ public class Deck : MonoBehaviour
         Shuffle(drawPile);
     }
 
-    private void Shuffle<T>(List<T> list)
+    private void Shuffle(List<CardData> list)
     {
-        list = list.OrderBy(x => Random.value).ToList();
+        for (int i = 0; i < list.Count; i++)
+        {
+            int rand = Random.Range(i, list.Count);
+            (list[i], list[rand]) = (list[rand], list[i]);
+        }
     }
 }

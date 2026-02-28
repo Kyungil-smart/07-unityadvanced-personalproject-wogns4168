@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,8 +19,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Update()
+    private void Start()
     {
-       
+        if (SceneManager.GetActiveScene().buildIndex == 0) SceneManager.LoadScene(1);
     }
 }

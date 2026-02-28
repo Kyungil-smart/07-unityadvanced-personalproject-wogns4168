@@ -502,6 +502,7 @@ MonoBehaviour:
   costText: {fileID: 5024690326228900856}
   typeText: {fileID: 6243995971746426536}
   descriptionText: {fileID: 5270165167552447416}
+  exhaustText: {fileID: 3956200639680579980}
   artworkImage: {fileID: 2168443322049921298}
 --- !u!1 &5347548629102813948
 GameObject:

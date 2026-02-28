@@ -37,8 +37,13 @@ public class CardView : MonoBehaviour, IPoolable
                     string.Format(cardData.description, cardData.healValue);
                 break;
         }
-        if (cardData.isExhaust) exhaustText.gameObject.SetActive(true);
+        exhaustText.gameObject.SetActive(cardData.isExhaust);
         artworkImage.sprite = cardData.cardImage;
+    }
+
+    public CardData GetCardData()
+    {
+        return _cardData;
     }
     
     public void OnSpawn()
@@ -56,6 +61,6 @@ public class CardView : MonoBehaviour, IPoolable
     {
         if (_cardData == null) return;
         
-        PoolManager.Instance.Despawn(gameObject, this.gameObject);
+        BattleManager.Instance.OnCardUsed(this);
     }
 }
