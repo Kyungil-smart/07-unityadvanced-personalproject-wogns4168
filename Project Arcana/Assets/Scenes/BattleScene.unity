@@ -936,7 +936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleManager
   _monsters: []
-  cardPrefab: {fileID: 3445891710312964848, guid: 9451504f820a7104c890189d80943b89, type: 3}
+  cardPrefab: {fileID: 8379937650794098350, guid: f9c83cc791f242f42a637dec47ae6297, type: 3}
   handArea: {fileID: 1654521748}
 --- !u!4 &570105540
 Transform:
@@ -2287,6 +2287,7 @@ RectTransform:
   - {fileID: 1651603982}
   - {fileID: 865026906}
   - {fileID: 563644135}
+  - {fileID: 1654521748}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2713,21 +2714,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1654521748
-Transform:
+--- !u!224 &1654521748
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654521747}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -4.95, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -9131.164}
+  m_LocalScale: {x: 101.457375, y: 101.457375, z: 101.457375}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1268744645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &1672155171
 GameObject:
   m_ObjectHideFlags: 0
@@ -3728,4 +3733,3 @@ SceneRoots:
   - {fileID: 7272487075616037816}
   - {fileID: 570105540}
   - {fileID: 1393491258}
-  - {fileID: 1654521748}

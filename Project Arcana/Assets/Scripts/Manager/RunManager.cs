@@ -21,10 +21,7 @@ public class RunManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    private void Start()
-    {
+        
         StartNewRun();
     }
 
