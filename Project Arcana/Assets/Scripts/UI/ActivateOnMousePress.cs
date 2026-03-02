@@ -16,6 +16,7 @@ public class CardDragArrow : MonoBehaviour,
     // 마우스 클릭 시작 (카드 선택)
     public void OnPointerDown(PointerEventData eventData)
     {
+        GetComponent<CardView>().SetDragging(true);
         // 카드 위치를 origin으로 화살표 활성화
         arrow.SetupAndActivate(transform);
     }
@@ -29,6 +30,7 @@ public class CardDragArrow : MonoBehaviour,
     // 마우스 버튼 떼기
     public void OnPointerUp(PointerEventData eventData)
     {
+        GetComponent<CardView>().SetDragging(false);
         if (currentTarget != null)
         {
             // 타겟이 있으면 즉시 효과 적용

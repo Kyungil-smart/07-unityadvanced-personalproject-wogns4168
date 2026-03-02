@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class CardView : MonoBehaviour, IPoolable
+public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text costText;
@@ -11,8 +13,12 @@ public class CardView : MonoBehaviour, IPoolable
     [SerializeField] private TMP_Text exhaustText;
     [SerializeField] private Image artworkImage;
     
+    public bool IsHover { get; private set; }
+    public bool IsSelected { get; private set; }
+    public bool IsDragging { get; private set; }
     
     private CardData _cardData;
+    
 
     public void Setup(CardData cardData)
     {
@@ -54,13 +60,50 @@ public class CardView : MonoBehaviour, IPoolable
     public void OnDespawn()
     {
         _cardData = null;
+        IsHover = false;
+        IsSelected = false;
+        IsDragging = false;
         gameObject.SetActive(false);
     }
 
     public void UseCard()
     {
         if (_cardData == null) return;
-        
+
         BattleManager.Instance.OnCardUsed(this);
+    }
+
+    public void SetDragging(bool value)
+    {
+        IsDragging = value;
+    }
+    
+    public void Select()
+    {
+        IsSelected = true;
+        BattleManager.Instance.RefreshHandLayout();
+    }
+
+    public void Deselect()
+    {
+        IsSelected = false;
+        BattleManager.Instance.RefreshHandLayout();
+    }
+    
+    public void SetHover(bool value)
+    {
+        IsHover = value;
+        BattleManager.Instance.RefreshHandLayout();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (IsDragging) return;   // 드래그 중이면 무시
+        SetHover(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetHover(false);
     }
 }

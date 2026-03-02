@@ -78,28 +78,58 @@ public class BattleManager : MonoBehaviour
     }
 
     // 🔥 핵심: 부채꼴 정렬
-    private void RefreshHandLayout()
+    public void RefreshHandLayout()
     {
         int count = _currentHandViews.Count;
         if (count == 0) return;
 
-        float middleIndex = (count - 1) / 2f;   // 중앙 기준
-        float spacing = 2f;                     // 카드 간 x 좌표 간격
-        float angleStep = 10f;                   // 기울기
-        float yStep = 0.5f;                       // y 축 내려가는 정도
+        float middleIndex = (count - 1) / 2f;
+        float spacing = 2f;
+        float angleStep = 10f;
+        float yStep = 0.5f;
 
         for (int i = 0; i < count; i++)
         {
+            CardView card = _currentHandViews[i];
+            RectTransform rect = card.GetComponent<RectTransform>();
+
             float offset = i - middleIndex;
 
-            RectTransform rect = _currentHandViews[i].GetComponent<RectTransform>();
-
             float x = offset * spacing;
-            float y = -Mathf.Abs(offset) * yStep;   // 양쪽으로 갈수록 조금씩 내려감
-            float angle = -offset * angleStep;      // 좌우 반대로 기울이기
+            float y = -Mathf.Abs(offset) * yStep;
+            float angle = -offset * angleStep;
 
-            rect.anchoredPosition = new Vector2(x, y);
-            rect.localRotation = Quaternion.Euler(0, 0, angle);
+            Vector2 finalPos = new Vector2(x, y);
+            Quaternion finalRot = Quaternion.Euler(0, 0, angle);
+            Vector3 finalScale = Vector3.one * 0.8f;
+
+            // 🔥 Hover일 때만 살짝 위로 + 확대
+            if (card.IsHover && !card.IsDragging)
+            {
+                finalPos += new Vector2(0, 3f);
+                finalScale = Vector3.one;
+
+                rect.SetAsLastSibling();
+            }
+
+            // 🔥 선택 고정
+            if (card.IsSelected)
+            {
+                finalPos += new Vector2(0, 3f);
+                finalScale = Vector3.one;
+
+                rect.SetAsLastSibling();
+            }
+
+            // 🔥 드래그 중
+            if (card.IsDragging)
+            {
+                rect.SetAsLastSibling();
+            }
+
+            rect.anchoredPosition = finalPos;
+            rect.localRotation = finalRot;
+            rect.localScale = finalScale;
         }
     }
 
@@ -125,4 +155,5 @@ public class BattleManager : MonoBehaviour
 
         _turnSystem.ChangeTurn(_turnSystem.playerState);
     }
+    
 }
