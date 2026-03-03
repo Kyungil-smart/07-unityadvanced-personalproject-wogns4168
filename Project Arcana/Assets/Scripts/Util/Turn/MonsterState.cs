@@ -1,29 +1,27 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MonsterState : ITurn
 {
-    TurnSystem _turnSystem;
+    private TurnSystem _turnSystem;
 
     public MonsterState(TurnSystem turnSystem)
     {
         _turnSystem = turnSystem;
     }
 
-
     public void Enter()
     {
-        Debug.Log("Entering MonsterState");
-        BattleManager.Instance.MonsterTurnStart();
+        Debug.Log("Monster's turn started");
+
+        // 예: 몬스터 공격 로직
+        // 여기서 공격 후 플레이어 턴으로 전환
+        _turnSystem.ChangeTurn(_turnSystem.playerState);
     }
 
-    public void Update()
-    {
-    }
+    public void Update() { }
 
     public void Exit()
     {
-        // 상태이상이 있다면 효과 적용 (poison)
+        Debug.Log("Monster's turn ended");
     }
-    
 }

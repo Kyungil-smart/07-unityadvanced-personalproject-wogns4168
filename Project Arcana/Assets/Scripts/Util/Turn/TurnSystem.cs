@@ -1,10 +1,6 @@
-using System;
-using UnityEngine;
-
 public class TurnSystem
 {
     private ITurn _currentTurn;
-    
     public PlayerState playerState;
     public MonsterState monsterState;
 
@@ -18,7 +14,7 @@ public class TurnSystem
     {
         ChangeTurn(playerState);
     }
-    
+
     public void Update()
     {
         _currentTurn?.Update();
@@ -30,5 +26,4 @@ public class TurnSystem
         _currentTurn = nextTurn;
         _currentTurn?.Enter();
     }
-    
 }

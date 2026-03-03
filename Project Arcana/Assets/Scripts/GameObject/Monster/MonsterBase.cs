@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 
 public abstract class MonsterBase : Health, ITargetable
 {
@@ -6,10 +7,35 @@ public abstract class MonsterBase : Health, ITargetable
     public abstract IEnumerator Act();
     public abstract void Reward();
 
-    // ITargetable 기본 구현 (추후 하위클래스에서 변경가능하도록 virtual)
-    public virtual void OnSelect() {  }
-    public virtual void OnHoverEnter() {  }
-    public virtual void OnHoverExit() {  }
+    private BattleView _battleView;
+    private SpriteRenderer _spriteRenderer;
+    private Color _originalColor;
+
+    protected virtual void Start()
+    {
+        _battleView = FindAnyObjectByType<BattleView>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (_spriteRenderer != null)
+            _originalColor = _spriteRenderer.color;
+    }
+
+    public virtual void OnSelect()
+    {
+        if (_battleView == null) return;
+        _battleView.UseSelectedCard(this);
+    }
+
+    public virtual void OnHoverEnter()
+    {
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = Color.yellow; // 호버 하이라이트
+    }
+
+    public virtual void OnHoverExit()
+    {
+        if (_spriteRenderer != null)
+            _spriteRenderer.color = _originalColor;
+    }
 
     public override void Die()
     {

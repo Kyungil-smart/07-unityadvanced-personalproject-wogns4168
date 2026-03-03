@@ -12,6 +12,11 @@ public class PlayerHealth : Health
         base.Awake();
     }
     
+    public void AddShield(float amount)
+    {
+        _currentShield += amount;
+    }
+    
     private float TakeDamageShield(float damage)
     {
         _currentShield -= damage;
