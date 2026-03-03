@@ -17,7 +17,7 @@ MonoBehaviour:
   cost: 2
   isExhaust: 0
   targetType: 0
-  cardImage: {fileID: 21300000, guid: 7092324b93851a14c858530cca4a6b26, type: 3}
+  cardImage: {fileID: 21300000, guid: fc4df3a9863666c44bf69ee51f1a06c2, type: 3}
   effects:
   - effectType: 0
     value: 8
