@@ -63,6 +63,18 @@ public class CardDragArrow : MonoBehaviour, IPointerDownHandler
         if (eventData.button != PointerEventData.InputButton.Left) return;
         if (_cardView.IsSelected) return;
 
+        // Self 타겟 카드는 화살표 없이 바로 사용
+        if (_cardView.GetCardData().targetType == CardTargetType.Self)
+        {
+            _cardView.Select();
+            OnCardSelected?.Invoke(_cardView); // _selectedCardView 세팅
+        
+            BattleView battleView = FindAnyObjectByType<BattleView>();
+            battleView?.UseSelectedCard(null); // null = 자기 자신
+            return;
+        }
+
+        // Enemy 타겟은 기존대로
         _cardView.Select();
         arrow.SetupAndActivate(_rectTransform);
         OnCardSelected?.Invoke(_cardView);

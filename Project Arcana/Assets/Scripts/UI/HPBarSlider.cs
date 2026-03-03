@@ -12,7 +12,8 @@ public class HPBarSlider : MonoBehaviour
     private Health _health;
     private Slider _slider;
     private TMP_Text _tmpText;
-    private GameObject _sliderInstance; // 인스턴스 참조 보관
+    private GameObject _sliderInstance;
+    private RectTransform _sliderRect; // 추가
 
     private void Start()
     {
@@ -20,9 +21,9 @@ public class HPBarSlider : MonoBehaviour
         if (_health == null || sliderPrefab == null || target == null || hpCanvas == null) return;
 
         _sliderInstance = Instantiate(sliderPrefab, hpCanvas.transform);
-        RectTransform rt = _sliderInstance.GetComponent<RectTransform>();
-        rt.localScale = Vector3.one;
-        rt.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset);
+        _sliderRect = _sliderInstance.GetComponent<RectTransform>(); // 추가
+        _sliderRect.localScale = Vector3.one;
+        _sliderRect.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset); // 원래 방식 유지
 
         _slider = _sliderInstance.GetComponentInChildren<Slider>();
         _tmpText = _sliderInstance.GetComponentInChildren<TMP_Text>();
@@ -38,7 +39,14 @@ public class HPBarSlider : MonoBehaviour
             _tmpText.text = $"{_health.currentHealth}/{_health.maxHealth}";
 
         _health.OnHealthChanged += UpdateBar;
-        _health.OnHealthChanged += CheckDead; // 사망 체크 추가
+        _health.OnHealthChanged += CheckDead;
+    }
+
+    private void LateUpdate()
+    {
+        // 매 프레임 위치 갱신 (원래 방식 그대로)
+        if (_sliderInstance == null || target == null) return;
+        _sliderRect.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset);
     }
 
     private void UpdateBar(float current, float max)
@@ -48,14 +56,12 @@ public class HPBarSlider : MonoBehaviour
             _slider.maxValue = max;
             _slider.value = current;
         }
-
         if (_tmpText != null)
             _tmpText.text = $"{current}/{max}";
     }
 
     private void CheckDead(float current, float max)
     {
-        // HP 0이 되면 HP바 삭제
         if (current <= 0 && _sliderInstance != null)
         {
             Destroy(_sliderInstance);
@@ -70,8 +76,6 @@ public class HPBarSlider : MonoBehaviour
             _health.OnHealthChanged -= UpdateBar;
             _health.OnHealthChanged -= CheckDead;
         }
-
-        // 오브젝트 삭제 시 HP바도 같이 삭제
         if (_sliderInstance != null)
             Destroy(_sliderInstance);
     }

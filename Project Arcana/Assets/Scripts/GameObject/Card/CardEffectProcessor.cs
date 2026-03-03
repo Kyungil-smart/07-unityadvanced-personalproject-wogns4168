@@ -34,10 +34,10 @@ public class CardEffectProcessor
                 if (target is Health health) health.TakeDamage(effect.value);
                 break;
             case CardEffectType.GainBlock:
-                _context.Player.AddShield(effect.value);
+                _context.Player.AddShield(effect.value); // target 무시, 항상 플레이어
                 break;
             case CardEffectType.Heal:
-                _context.Player.Heal(effect.value);
+                _context.Player.Heal(effect.value); // target 무시, 항상 플레이어
                 break;
             case CardEffectType.DrawCard:
                 _context.Model.DrawCards((int)effect.value);
@@ -46,7 +46,6 @@ public class CardEffectProcessor
             case CardEffectType.ApplyPoison:
             case CardEffectType.ApplyWeak:
             case CardEffectType.ApplyBreak:
-                // TODO: 상태이상 인터페이스(IStatus) 구현 후 연결
                 Debug.Log($"{effect.effectType} {effect.value} 적용 시도");
                 break;
         }
