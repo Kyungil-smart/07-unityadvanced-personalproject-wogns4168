@@ -1,35 +1,70 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class BattleModel
 {
     public List<MonsterBase> Monsters { get; private set; }
     public Deck Deck { get; private set; }
-    
-    // Deck.hand를 직접 참조
     public List<CardData> CurrentHand => Deck.hand;
+    public int MaxEnergy { get; private set; }
+    public int CurrentEnergy { get; private set; }
 
-    public BattleModel(List<MonsterBase> monsters, Deck deck)
+    private Player _player;
+
+    public BattleModel(List<MonsterBase> monsters, Deck deck, Player player)
     {
         Monsters = monsters;
         Deck = deck;
+        _player = player;
+
+        MaxEnergy = RunManager.Instance != null ? RunManager.Instance.baseMaxEnergy : 3;
+        CurrentEnergy = MaxEnergy;
     }
 
-    public void DrawCard()
-    {
-        Deck.Draw(); // Deck.hand에 자동으로 추가됨
-    }
-
-    public void UseCard(CardData card)
-    {
-        Deck.UseCard(card); // Deck 내부에서 hand에서 제거
-    }
+    public void DrawCard() => Deck.Draw();
+    public void UseCard(CardData card) => Deck.UseCard(card);
 
     public void DrawCards(int count)
     {
         for (int i = 0; i < count; i++)
             DrawCard();
-            
-        Debug.Log($"손패 수: {CurrentHand.Count}");
+    }
+
+    public void DiscardHand()
+    {
+        var handCopy = new List<CardData>(Deck.hand);
+        foreach (var card in handCopy)
+            Deck.UseCard(card);
+    }
+
+    public void RefillEnergy() => CurrentEnergy = MaxEnergy;
+
+    public bool UseEnergy(int amount)
+    {
+        if (CurrentEnergy < amount) return false;
+        CurrentEnergy -= amount;
+        return true;
+    }
+
+    // 전투 종료 체크
+    public BattleResult CheckBattleResult()
+    {
+        // 플레이어 사망
+        if (_player != null && _player.isDead)
+            return BattleResult.Defeat;
+
+        // 모든 몬스터 사망
+        bool allDead = true;
+        foreach (var monster in Monsters)
+        {
+            if (monster != null && !monster.isDead)
+            {
+                allDead = false;
+                break;
+            }
+        }
+
+        if (allDead) return BattleResult.Victory;
+
+        return BattleResult.None;
     }
 }

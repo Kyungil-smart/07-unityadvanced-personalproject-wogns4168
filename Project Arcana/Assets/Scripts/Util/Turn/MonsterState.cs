@@ -1,27 +1,42 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 
 public class MonsterState : ITurn
 {
     private TurnSystem _turnSystem;
+    private BattleModel _model;
+    private BattlePresenter _presenter;
 
-    public MonsterState(TurnSystem turnSystem)
+    public MonsterState(TurnSystem turnSystem, BattleModel model, BattlePresenter presenter)
     {
         _turnSystem = turnSystem;
+        _model = model;
+        _presenter = presenter;
     }
 
     public void Enter()
     {
-        Debug.Log("Monster's turn started");
+        foreach (var monster in _model.Monsters)
+        {
+            if (monster == null || monster.isDead) continue;
+            monster.StartCoroutine(ActAndEndTurn(monster));
+            return;
+        }
 
-        // 예: 몬스터 공격 로직
-        // 여기서 공격 후 플레이어 턴으로 전환
         _turnSystem.ChangeTurn(_turnSystem.playerState);
     }
 
-    public void Update() { }
-
-    public void Exit()
+    private IEnumerator ActAndEndTurn(MonsterBase monster)
     {
-        Debug.Log("Monster's turn ended");
+        yield return monster.StartCoroutine(monster.Act());
+
+        // 몬스터 공격 후 전투 종료 체크
+        _presenter.OnMonsterTurnEnd();
+
+        // 전투가 끝나지 않았으면 플레이어 턴으로
+        if (_model.CheckBattleResult() == BattleResult.None)
+            _turnSystem.ChangeTurn(_turnSystem.playerState);
     }
+
+    public void Update() { }
+    public void Exit() { }
 }

@@ -28,7 +28,7 @@ public abstract class MonsterBase : Health, ITargetable
     public virtual void OnHoverEnter()
     {
         if (_spriteRenderer != null)
-            _spriteRenderer.color = Color.yellow; // 호버 하이라이트
+            _spriteRenderer.color = Color.crimson; // 호버 하이라이트
     }
 
     public virtual void OnHoverExit()

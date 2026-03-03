@@ -1,43 +1,46 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerHealth : Health
 {
-    readonly float _defaultShield = 0;
     private float _currentShield;
-    private float _absShield;
+    public event Action<float> OnShieldChanged; // 이게 있어야 함
 
-    public override void Awake()
-    {
-        _currentShield = _defaultShield;
-        base.Awake();
-    }
-    
+    public float CurrentShield => _currentShield;
+
     public void AddShield(float amount)
     {
         _currentShield += amount;
+        OnShieldChanged?.Invoke(_currentShield);
     }
-    
+
     private float TakeDamageShield(float damage)
     {
+        if (_currentShield <= 0) return damage;
+
         _currentShield -= damage;
         if (_currentShield <= 0)
         {
-            _absShield = Mathf.Abs(_currentShield);
-            _currentShield = _defaultShield;
-            return _absShield;
+            float remaining = Mathf.Abs(_currentShield);
+            _currentShield = 0;
+            OnShieldChanged?.Invoke(_currentShield);
+            return remaining;
         }
+
+        OnShieldChanged?.Invoke(_currentShield);
         return 0f;
     }
 
     public override void TakeDamage(float damage)
     {
-        float remainingDamage = TakeDamageShield(damage); // 항상 호출
+        float remainingDamage = TakeDamageShield(damage);
         if (remainingDamage > 0f)
             base.TakeDamage(remainingDamage);
     }
 
-    public override void Die()
+    public void ResetShield()
     {
-        // 게임오버
+        _currentShield = 0;
+        OnShieldChanged?.Invoke(_currentShield);
     }
 }

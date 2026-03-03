@@ -16,12 +16,14 @@ public class BattleInitializer : MonoBehaviour
 
         if (deckToUse == null)
         {
-            Debug.LogError("덱이 null입니다! RunManager를 확인하세요.");
+            Debug.LogError("덱이 null");
             return;
         }
 
-        _model = new BattleModel(monsters, deckToUse);
-        _presenter = new BattlePresenter(_model, battleView, battleHUD);
+        Player player = FindAnyObjectByType<Player>();
+        _model = new BattleModel(monsters, deckToUse, player); // player 추가
+        BattleContext context = new BattleContext(player, monsters, _model);
+        _presenter = new BattlePresenter(_model, battleView, battleHUD, context);
     }
 
     private void Update()

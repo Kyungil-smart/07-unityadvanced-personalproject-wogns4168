@@ -28,26 +28,42 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
     public void Setup(CardData cardData)
     {
         _cardData = cardData;
-        
         nameText.text = cardData.cardName;
         costText.text = cardData.cost.ToString();
-        switch (cardData.effectType)
-        {
-            case CardEffectType.DealDamage:
-                descriptionText.text = string.Format(cardData.description, cardData.attackValue);
-                break;
-            case CardEffectType.GainBlock:
-                descriptionText.text = string.Format(cardData.description, cardData.defenseValue);
-                break;
-            case CardEffectType.Heal:
-                descriptionText.text = string.Format(cardData.description, cardData.healValue);
-                break;
-            default:
-                descriptionText.text = cardData.description;
-                break;
-        }
-        exhaustText.gameObject.SetActive(cardData.isExhaust);
         artworkImage.sprite = cardData.cardImage;
+
+        if (cardData.effects.Count > 0)
+        {
+            // 수치들을 색상이 입혀진 문자열로 변환
+            object[] styledValues = new object[cardData.effects.Count];
+            for (int i = 0; i < cardData.effects.Count; i++)
+            {
+                float val = cardData.effects[i].value;
+                CardEffectType type = cardData.effects[i].effectType;
+
+                // 타입에 따라 다른 색상 적용
+                string colorHex = type switch
+                {
+                    CardEffectType.DealDamage => "#FF5B5B", // 연빨강 (공격)
+                    CardEffectType.GainBlock => "#5B5BFF",  // 연파랑 (방어)
+                    CardEffectType.ApplyVulnerable => "#FFD700", // 골드 (취약)
+                    CardEffectType.DrawCard => "#50C878",   // 에메랄드 (드로우)
+                    _ => "#FFFFFF" // 기본 흰색
+                };
+
+                // 수치에 색상 태그 입히기 (예: <color=#FF5B5B>8</color>)
+                styledValues[i] = $"<color={colorHex}>{val}</color>";
+            }
+
+            try {
+                descriptionText.text = string.Format(cardData.description, styledValues);
+            } catch {
+                descriptionText.text = cardData.description;
+            }
+        }
+        else {
+            descriptionText.text = cardData.description;
+        }
     }
 
     public CardData GetCardData() => _cardData;

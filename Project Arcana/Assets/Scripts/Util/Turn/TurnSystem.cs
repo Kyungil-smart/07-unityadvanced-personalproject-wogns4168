@@ -4,21 +4,15 @@ public class TurnSystem
     public PlayerState playerState;
     public MonsterState monsterState;
 
-    public TurnSystem()
+    public TurnSystem(BattleModel model, BattleHUD hud, BattleView view, BattlePresenter presenter, Player player)
     {
-        playerState = new PlayerState(this);
-        monsterState = new MonsterState(this);
+        playerState = new PlayerState(this, model, hud, view, player);
+        monsterState = new MonsterState(this, model, presenter);
     }
 
-    public void Init()
-    {
-        ChangeTurn(playerState);
-    }
+    public void Init() => ChangeTurn(playerState);
 
-    public void Update()
-    {
-        _currentTurn?.Update();
-    }
+    public void Update() => _currentTurn?.Update();
 
     public void ChangeTurn(ITurn nextTurn)
     {

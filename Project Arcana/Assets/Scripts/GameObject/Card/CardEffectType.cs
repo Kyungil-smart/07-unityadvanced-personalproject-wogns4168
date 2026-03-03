@@ -7,4 +7,5 @@
     ApplyWeak,     // 약화
     ApplyBreak,    // 브레이크
     DrawCard,      // 드로우
+    ApplyVulnerable,
 }

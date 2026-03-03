@@ -14,7 +14,7 @@ public class BattleView : MonoBehaviour
     private CardView _selectedCardView;
 
     public event Action<CardView> OnCardSelected;
-    public event Action<CardView> OnCardUsed;
+    public event Action<CardView, ITargetable> OnCardUsed;
 
     public void ClearHand()
     {
@@ -87,7 +87,7 @@ public class BattleView : MonoBehaviour
     {
         if (_selectedCardView == null) return;
 
-        OnCardUsed?.Invoke(_selectedCardView);
+        OnCardUsed?.Invoke(_selectedCardView, target); // target 같이 전달
 
         _selectedDragArrow?.Deselect();
         _selectedDragArrow = null;
@@ -98,7 +98,6 @@ public class BattleView : MonoBehaviour
 
     private void HandleCardSelected(CardView view)
     {
-        // 기존 선택 카드 Deselect (arrow는 바로 새 카드로 넘길 거라 끄지 않음)
         if (_selectedDragArrow != null)
         {
             _selectedDragArrow.CardView.Deselect();
@@ -108,7 +107,10 @@ public class BattleView : MonoBehaviour
         _selectedCardView = view;
         _selectedDragArrow = view.GetComponent<CardDragArrow>();
 
-        // 화살표 새 카드 기준으로 즉시 갱신
+        // Self 타겟이면 화살표 안 띄움
+        if (view.GetCardData().targetType == CardTargetType.Self)
+            return;
+
         arrow.SetupAndActivate(view.GetComponent<RectTransform>());
 
         OnCardSelected?.Invoke(view);
