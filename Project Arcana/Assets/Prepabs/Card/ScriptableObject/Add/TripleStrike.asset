@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b729ab980ba751e48b28886e06fb1d3a, type: 3}
-  m_Name: Poison Dart
+  m_Name: TripleStrike
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: "\uB3C5 \uC8FC\uC785"
-  description: "\uC801\uC5D0\uAC8C \uB3C5 {0}\uC744 \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-  cost: 1
+  cardName: "\uC0BC\uC5F0\uACA9"
+  description: "\uC801\uC5D0\uAC8C {0} \uD53C\uD574\uB97C 3\uBC88 \uC90D\uB2C8\uB2E4."
+  cost: 2
   isExhaust: 0
   targetType: 0
-  cardImage: {fileID: 21300000, guid: 34baed5f0d4950e4c98a5ade245c661e, type: 3}
+  cardImage: {fileID: 21300000, guid: 4756cd51493e8074989707edfa720e3e, type: 3}
   effects:
-  - effectType: 3
-    value: 3
+  - effectType: 0
+    value: 4
+  - effectType: 0
+    value: 4
+  - effectType: 0
+    value: 4
