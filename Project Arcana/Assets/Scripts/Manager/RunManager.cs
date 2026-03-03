@@ -4,11 +4,13 @@ using UnityEngine;
 public class RunManager : MonoBehaviour
 {
     public static RunManager Instance { get; private set; }
-    
+
     public List<CardData> startingDeck = new List<CardData>();
-    public int baseMaxEnergy = 3; // 기본 에너지 (유물/이벤트로 증가 가능)
-    
+    public List<CardData> allCards; // 보상으로 줄 수 있는 카드 풀 (Inspector에서 설정)
+    public int baseMaxEnergy = 3;
+
     public Deck currentDeck { get; private set; }
+    public int Gold { get; private set; }
 
     private void Awake()
     {
@@ -20,7 +22,7 @@ public class RunManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         StartNewRun();
     }
 
@@ -28,5 +30,40 @@ public class RunManager : MonoBehaviour
     {
         currentDeck = new Deck();
         currentDeck.Init(startingDeck);
+        Gold = 0;
+    }
+
+    public void AddGold(int amount)
+    {
+        Gold += amount;
+        Debug.Log($"골드 +{amount}, 현재 골드: {Gold}");
+    }
+
+    public void AddCardToDeck(CardData card)
+    {
+        currentDeck.AddCard(card);
+        Debug.Log($"{card.cardName} 덱에 추가, 현재 덱: {currentDeck.drawPile.Count + currentDeck.discardPile.Count}장");
+    }
+
+    // 보상용 랜덤 카드 3장 뽑기
+    public List<CardData> GetRandomRewardCards(int count = 3)
+    {
+        if (allCards == null || allCards.Count == 0)
+        {
+            Debug.LogWarning("allCards가 비어있음!");
+            return new List<CardData>();
+        }
+
+        List<CardData> pool = new List<CardData>(allCards);
+        List<CardData> result = new List<CardData>();
+
+        for (int i = 0; i < count && pool.Count > 0; i++)
+        {
+            int rand = Random.Range(0, pool.Count);
+            result.Add(pool[rand]);
+            pool.RemoveAt(rand); // 중복 방지
+        }
+
+        return result;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattlePresenter
@@ -7,19 +8,24 @@ public class BattlePresenter
     private TurnSystem _turnSystem;
     private BattleHUD _hud;
     private CardEffectProcessor _effectProcessor;
+    private BattleResultPanel _resultPanel;
+    private CardRewardPanel _rewardPanel;
+    private int _goldReward = 10; // 기본 골드 보상
 
-    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context)
+    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context, BattleResultPanel resultPanel, CardRewardPanel rewardPanel)
     {
         _model = model;
         _view = view;
         _hud = hud;
+        _resultPanel = resultPanel;
+        _rewardPanel = rewardPanel;
         _effectProcessor = new CardEffectProcessor(context);
 
         _view.OnCardSelected += SelectCard;
         _view.OnCardUsed += UseCard;
 
         _hud.SetEndTurnCallback(OnEndTurnPressed);
-        
+
         _turnSystem = new TurnSystem(_model, _hud, _view, this, context.Player);
         _turnSystem.Init();
 
@@ -57,6 +63,7 @@ public class BattlePresenter
     }
     private void OnEndTurnPressed()
     {
+        _hud.SetEnemyTurn();
         _turnSystem.ChangeTurn(_turnSystem.monsterState);
     }
     
@@ -97,13 +104,31 @@ public class BattlePresenter
 
     private void OnVictory()
     {
-        // 추후 보상 화면 연결
-        Debug.Log("보상 화면으로 이동");
+        _hud.SetEndTurnInteractable(false);
+        _view.ClearHand();
+
+        _resultPanel.ShowVictory(_goldReward,
+            onGoldCollect: () => { },
+            onCardReward: () =>
+            {
+                List<CardData> rewardCards = RunManager.Instance.GetRandomRewardCards();
+                _rewardPanel.Show(rewardCards, () =>
+                {
+                    _resultPanel.HideAll(); // 카드 선택 후 dimPanel까지 끄기
+                    Debug.Log("맵으로 이동");
+                });
+            }
+        );
     }
 
     private void OnDefeat()
     {
-        // 추후 게임오버 화면 연결
-        Debug.Log("게임오버");
+        _hud.SetEndTurnInteractable(false);
+        _view.ClearHand();
+
+        _resultPanel.ShowDefeat(() =>
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        });
     }
 }
