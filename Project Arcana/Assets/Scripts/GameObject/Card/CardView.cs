@@ -31,16 +31,19 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
         
         nameText.text = cardData.cardName;
         costText.text = cardData.cost.ToString();
-        switch (cardData.type)
+        switch (cardData.effectType)
         {
-            case CardType.Attack:
+            case CardEffectType.DealDamage:
                 descriptionText.text = string.Format(cardData.description, cardData.attackValue);
                 break;
-            case CardType.Defense:
+            case CardEffectType.GainBlock:
                 descriptionText.text = string.Format(cardData.description, cardData.defenseValue);
                 break;
-            case CardType.Heal:
+            case CardEffectType.Heal:
                 descriptionText.text = string.Format(cardData.description, cardData.healValue);
+                break;
+            default:
+                descriptionText.text = cardData.description;
                 break;
         }
         exhaustText.gameObject.SetActive(cardData.isExhaust);
