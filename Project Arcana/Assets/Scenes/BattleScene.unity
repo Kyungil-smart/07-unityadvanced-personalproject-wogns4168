@@ -454,7 +454,7 @@ GameObject:
   - component: {fileID: 313403205}
   - component: {fileID: 313403204}
   m_Layer: 5
-  m_Name: EnergyText
+  m_Name: Exhaust Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,8 +708,10 @@ GameObject:
   m_Component:
   - component: {fileID: 495874340}
   - component: {fileID: 495874339}
+  - component: {fileID: 495874341}
+  - component: {fileID: 495874342}
   m_Layer: 0
-  m_Name: BattleView
+  m_Name: BattleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -745,53 +747,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &504120681
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 504120683}
-  - component: {fileID: 504120682}
-  m_Layer: 0
-  m_Name: BattleManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &504120682
+--- !u!114 &495874341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504120681}
+  m_GameObject: {fileID: 495874338}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c25df6f5dca4de4a92624cd8973f346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitializer
   battleView: {fileID: 495874339}
+  battleHUD: {fileID: 495874342}
   monsters:
   - {fileID: 1006493495}
---- !u!4 &504120683
-Transform:
+--- !u!114 &495874342
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504120681}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.96545, y: -0.83045, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 495874338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8ef57641e194b4f811f36d41d824ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleHUD
+  deckCountText: {fileID: 722704551}
+  discardCountText: {fileID: 1142558120}
+  exhaustCountText: {fileID: 313403204}
+  energyText: {fileID: 1955328458}
+  endTurnButton: {fileID: 563644136}
+  endTurnButtonText: {fileID: 701540763}
 --- !u!1 &507010282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,7 +1961,7 @@ GameObject:
   - component: {fileID: 1142558121}
   - component: {fileID: 1142558120}
   m_Layer: 5
-  m_Name: DeckText
+  m_Name: DiscardDeckText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6927,4 +6916,3 @@ SceneRoots:
   - {fileID: 7272487075616037816}
   - {fileID: 1393491258}
   - {fileID: 495874340}
-  - {fileID: 504120683}
