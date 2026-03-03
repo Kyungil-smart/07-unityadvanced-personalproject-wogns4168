@@ -18,7 +18,11 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
     public bool IsDragging { get; private set; }
     
     private CardData _cardData;
-    
+
+    public event Action<CardView> OnSelected;
+    public event Action<CardView> OnUsed;
+    public event Action<CardView> OnHoverEnter;
+    public event Action<CardView> OnHoverExit;
 
     public void Setup(CardData cardData)
     {
@@ -29,34 +33,22 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
         switch (cardData.type)
         {
             case CardType.Attack:
-                descriptionText.text =
-                    string.Format(cardData.description, cardData.attackValue);
+                descriptionText.text = string.Format(cardData.description, cardData.attackValue);
                 break;
-
             case CardType.Defense:
-                descriptionText.text =
-                    string.Format(cardData.description, cardData.defenseValue);
+                descriptionText.text = string.Format(cardData.description, cardData.defenseValue);
                 break;
-
             case CardType.Heal:
-                descriptionText.text =
-                    string.Format(cardData.description, cardData.healValue);
+                descriptionText.text = string.Format(cardData.description, cardData.healValue);
                 break;
         }
         exhaustText.gameObject.SetActive(cardData.isExhaust);
         artworkImage.sprite = cardData.cardImage;
     }
 
-    public CardData GetCardData()
-    {
-        return _cardData;
-    }
-    
-    public void OnSpawn()
-    {
-        gameObject.SetActive(true);
-    }
+    public CardData GetCardData() => _cardData;
 
+    public void OnSpawn() => gameObject.SetActive(true);
     public void OnDespawn()
     {
         _cardData = null;
@@ -69,41 +61,32 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
     public void UseCard()
     {
         if (_cardData == null) return;
-
-        BattleManager.Instance.OnCardUsed(this);
+        OnUsed?.Invoke(this);
     }
 
-    public void SetDragging(bool value)
-    {
-        IsDragging = value;
-    }
-    
+    public void SetDragging(bool value) => IsDragging = value;
+
     public void Select()
     {
+        if (IsSelected) return;
         IsSelected = true;
-        BattleManager.Instance.RefreshHandLayout();
+        OnSelected?.Invoke(this);
     }
 
-    public void Deselect()
-    {
-        IsSelected = false;
-        BattleManager.Instance.RefreshHandLayout();
-    }
-    
-    public void SetHover(bool value)
-    {
-        IsHover = value;
-        BattleManager.Instance.RefreshHandLayout();
-    }
+    public void Deselect() => IsSelected = false;
+
+    public void SetHover(bool value) => IsHover = value;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsDragging) return;   // 드래그 중이면 무시
+        if (IsDragging) return;
         SetHover(true);
+        OnHoverEnter?.Invoke(this);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         SetHover(false);
+        OnHoverExit?.Invoke(this);
     }
 }

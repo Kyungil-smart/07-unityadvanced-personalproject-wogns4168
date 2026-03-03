@@ -1099,6 +1099,7 @@ GameObject:
   - component: {fileID: 4479232002554855731}
   - component: {fileID: 1222413475957623031}
   - component: {fileID: 8926484823887797971}
+  - component: {fileID: 5952806981838030984}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -1188,3 +1189,16 @@ MonoBehaviour:
   descriptionText: {fileID: 1150215520881501556}
   exhaustText: {fileID: 1318776235842899028}
   artworkImage: {fileID: 3207497469676341752}
+--- !u!114 &5952806981838030984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8379937650794098350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5f6b2d50f585a42986912525bd84cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CardDragArrow
+  arrow: {fileID: 0}
