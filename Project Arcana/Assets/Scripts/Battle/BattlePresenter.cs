@@ -20,7 +20,7 @@ public class BattlePresenter
 
         _hud.SetEndTurnCallback(OnEndTurnPressed);
         
-        _turnSystem = new TurnSystem(_model, _hud, _view, this);
+        _turnSystem = new TurnSystem(_model, _hud, _view, this, context.Player);
         _turnSystem.Init();
 
         RefreshHUD();

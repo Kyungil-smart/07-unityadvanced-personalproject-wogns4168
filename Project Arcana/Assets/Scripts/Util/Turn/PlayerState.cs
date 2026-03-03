@@ -6,27 +6,28 @@ public class PlayerState : ITurn
     private BattleModel _model;
     private BattleHUD _hud;
     private BattleView _view;
+    private Player _player;
 
-    public PlayerState(TurnSystem turnSystem, BattleModel model, BattleHUD hud, BattleView view)
+    public PlayerState(TurnSystem turnSystem, BattleModel model, BattleHUD hud, BattleView view, Player player)
     {
         _turnSystem = turnSystem;
         _model = model;
         _hud = hud;
         _view = view;
+        _player = player;
     }
 
     public void Enter()
     {
         Debug.Log("플레이어 턴 시작");
 
-        // 에너지 회복
-        _model.RefillEnergy();
+        // 실드 초기화
+        _player?.ResetShield();
 
-        // 카드 5장 드로우
+        _model.RefillEnergy();
         _model.DrawCards(5);
         _view.SpawnHand(_model.CurrentHand);
 
-        // HUD 갱신
         _hud.SetPlayerTurn();
         RefreshHUD();
     }

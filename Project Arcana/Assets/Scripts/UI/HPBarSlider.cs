@@ -10,23 +10,38 @@ public class HPBarSlider : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0, -0.3f, 0);
 
     private Health _health;
+    private PlayerHealth _playerHealth;
     private Slider _slider;
     private TMP_Text _tmpText;
     private GameObject _sliderInstance;
-    private RectTransform _sliderRect; // 추가
+    private RectTransform _sliderRect;
+
+    private GameObject _shieldGroup;
+    private TMP_Text _shieldText;
 
     private void Start()
     {
         _health = GetComponent<Health>();
+        _playerHealth = GetComponent<PlayerHealth>();
+
         if (_health == null || sliderPrefab == null || target == null || hpCanvas == null) return;
 
         _sliderInstance = Instantiate(sliderPrefab, hpCanvas.transform);
-        _sliderRect = _sliderInstance.GetComponent<RectTransform>(); // 추가
+        _sliderRect = _sliderInstance.GetComponent<RectTransform>();
         _sliderRect.localScale = Vector3.one;
-        _sliderRect.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset); // 원래 방식 유지
+        _sliderRect.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset);
 
         _slider = _sliderInstance.GetComponentInChildren<Slider>();
         _tmpText = _sliderInstance.GetComponentInChildren<TMP_Text>();
+
+        // ShieldGroup 찾기
+        Transform shieldTransform = _sliderInstance.transform.Find("ShieldGroup");
+        if (shieldTransform != null)
+        {
+            _shieldGroup = shieldTransform.gameObject;
+            _shieldText = _shieldGroup.GetComponentInChildren<TMP_Text>();
+            _shieldGroup.SetActive(false);
+        }
 
         if (_slider != null)
         {
@@ -40,11 +55,13 @@ public class HPBarSlider : MonoBehaviour
 
         _health.OnHealthChanged += UpdateBar;
         _health.OnHealthChanged += CheckDead;
+
+        if (_playerHealth != null)
+            _playerHealth.OnShieldChanged += UpdateShieldUI;
     }
 
     private void LateUpdate()
     {
-        // 매 프레임 위치 갱신 (원래 방식 그대로)
         if (_sliderInstance == null || target == null) return;
         _sliderRect.localPosition = hpCanvas.transform.InverseTransformPoint(target.position + offset);
     }
@@ -58,6 +75,21 @@ public class HPBarSlider : MonoBehaviour
         }
         if (_tmpText != null)
             _tmpText.text = $"{current}/{max}";
+    }
+
+    private void UpdateShieldUI(float shieldAmount)
+    {
+        if (_shieldGroup == null || _shieldText == null) return;
+
+        if (shieldAmount > 0)
+        {
+            _shieldGroup.SetActive(true);
+            _shieldText.text = shieldAmount.ToString();
+        }
+        else
+        {
+            _shieldGroup.SetActive(false);
+        }
     }
 
     private void CheckDead(float current, float max)
@@ -76,6 +108,9 @@ public class HPBarSlider : MonoBehaviour
             _health.OnHealthChanged -= UpdateBar;
             _health.OnHealthChanged -= CheckDead;
         }
+        if (_playerHealth != null)
+            _playerHealth.OnShieldChanged -= UpdateShieldUI;
+
         if (_sliderInstance != null)
             Destroy(_sliderInstance);
     }

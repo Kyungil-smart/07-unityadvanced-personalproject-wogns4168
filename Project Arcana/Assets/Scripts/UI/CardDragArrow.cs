@@ -68,13 +68,13 @@ public class CardDragArrow : MonoBehaviour, IPointerDownHandler
         {
             _cardView.Select();
             OnCardSelected?.Invoke(_cardView); // _selectedCardView 세팅
-        
+
             BattleView battleView = FindAnyObjectByType<BattleView>();
-            battleView?.UseSelectedCard(null); // null = 자기 자신
-            return;
+            battleView?.UseSelectedCard(null);
+            return; // 화살표 띄우는 코드로 안 넘어감
         }
 
-        // Enemy 타겟은 기존대로
+        // Enemy 타겟은 기존대로 화살표
         _cardView.Select();
         arrow.SetupAndActivate(_rectTransform);
         OnCardSelected?.Invoke(_cardView);
