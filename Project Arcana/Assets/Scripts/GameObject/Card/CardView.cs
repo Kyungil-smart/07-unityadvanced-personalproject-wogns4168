@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointerExitHandler
 {
+    
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text costText;
     [SerializeField] private TMP_Text typeText;

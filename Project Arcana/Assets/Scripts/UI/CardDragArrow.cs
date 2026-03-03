@@ -5,13 +5,16 @@ using UnityEngine.EventSystems;
 public class CardDragArrow : MonoBehaviour, IPointerDownHandler
 {
     public Arrow arrow;
+    public CardView CardView => _cardView; // public 프로퍼티로 노출
     private CardView _cardView;
+    private RectTransform _rectTransform;
     public event Action<CardView> OnCardSelected;
     public event Action<CardView> OnCardDeselected;
 
     private void Awake()
     {
         _cardView = GetComponent<CardView>();
+        _rectTransform = GetComponent<RectTransform>();
         if (arrow == null)
             arrow = FindAnyObjectByType<Arrow>();
     }
@@ -20,14 +23,12 @@ public class CardDragArrow : MonoBehaviour, IPointerDownHandler
     {
         if (!_cardView.IsSelected) return;
 
-        // 우클릭 → 선택 해제
         if (Input.GetMouseButtonDown(1))
         {
             Deselect();
             return;
         }
 
-        // 좌클릭 → 타겟 감지
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -38,8 +39,8 @@ public class CardDragArrow : MonoBehaviour, IPointerDownHandler
                 var target = hit.GetComponent<ITargetable>();
                 if (target != null)
                 {
-                    target.OnSelect(); // BattleView.UseSelectedCard 호출
-                    Deselect();        // 화살표 제거
+                    target.OnSelect();
+                    Deselect();
                 }
             }
         }
@@ -51,7 +52,7 @@ public class CardDragArrow : MonoBehaviour, IPointerDownHandler
         if (_cardView.IsSelected) return;
 
         _cardView.Select();
-        arrow.SetupAndActivate(transform);
+        arrow.SetupAndActivate(_rectTransform);
         OnCardSelected?.Invoke(_cardView);
     }
 

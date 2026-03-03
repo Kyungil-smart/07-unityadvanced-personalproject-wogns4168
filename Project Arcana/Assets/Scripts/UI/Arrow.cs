@@ -3,10 +3,10 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     [SerializeField] private RectTransform baseRect;
-    [SerializeField] private Transform origin;
     [SerializeField] private bool startsActive = false;
 
     private RectTransform myRect;
+    private RectTransform originRect;
     private Canvas canvas;
     private bool isActive;
 
@@ -20,48 +20,29 @@ public class Arrow : MonoBehaviour
 
     private void Update()
     {
-        if (!isActive || origin == null) return;
+        if (!isActive || originRect == null) return;
 
-        RectTransform canvasRect = (RectTransform)canvas.transform;
-        RectTransform originRect = origin as RectTransform;
+        myRect.SetAsLastSibling();
 
-        Vector2 originLocal;
-        Vector2 mouseLocal;
+        float scaleFactor = canvas.scaleFactor;
+        Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
-        if (originRect != null)
-        {
-            // UI RectTransform → Canvas 로컬 좌표 직접 변환
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                RectTransformUtility.WorldToScreenPoint(null, originRect.position),
-                null,
-                out originLocal
-            );
-        }
-        else
-        {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                canvasRect,
-                Camera.main.WorldToScreenPoint(origin.position),
-                null,
-                out originLocal
-            );
-        }
+        // 카드가 속한 Canvas의 카메라로 스크린 좌표 변환
+        Canvas originCanvas = originRect.GetComponentInParent<Canvas>();
+        Camera originCamera = originCanvas.renderMode == RenderMode.ScreenSpaceOverlay 
+            ? null 
+            : originCanvas.worldCamera;
 
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvasRect,
-            Input.mousePosition,
-            null,
-            out mouseLocal
-        );
+        Vector2 originScreen = RectTransformUtility.WorldToScreenPoint(originCamera, originRect.position);
+        Vector2 mouseScreen = Input.mousePosition;
 
-        Debug.Log($"originLocal: {originLocal}, mouseLocal: {mouseLocal}");
+        myRect.anchoredPosition = (originScreen - screenCenter) / scaleFactor;
 
-        myRect.localPosition = originLocal;
+        Vector2 dir = mouseScreen - originScreen;
+        float length = dir.magnitude;
 
-        Vector2 dir = mouseLocal - originLocal;
-        float length = dir.magnitude / 100f;
-        baseRect.localScale = new Vector3(1, Mathf.Max(length, 0.01f), 1);
+        float baseHeightPixels = baseRect.rect.height * scaleFactor;
+        baseRect.localScale = new Vector3(1, length / baseHeightPixels, 1);
 
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
         baseRect.localRotation = Quaternion.Euler(0, 0, angle);
@@ -77,9 +58,9 @@ public class Arrow : MonoBehaviour
     public void Activate() => SetActive(true);
     public void Deactivate() => SetActive(false);
 
-    public void SetupAndActivate(Transform origin)
+    public void SetupAndActivate(RectTransform origin)
     {
-        this.origin = origin;
+        originRect = origin;
         Activate();
     }
 }

@@ -83,14 +83,12 @@ public class BattleView : MonoBehaviour
         }
     }
 
-    // 타겟 클릭 시 외부(ITargetable)에서 호출
     public void UseSelectedCard(ITargetable target)
     {
         if (_selectedCardView == null) return;
 
         OnCardUsed?.Invoke(_selectedCardView);
 
-        // 선택 해제
         _selectedDragArrow?.Deselect();
         _selectedDragArrow = null;
         _selectedCardView = null;
@@ -100,12 +98,18 @@ public class BattleView : MonoBehaviour
 
     private void HandleCardSelected(CardView view)
     {
-        // 기존 선택 카드 해제
+        // 기존 선택 카드 Deselect (arrow는 바로 새 카드로 넘길 거라 끄지 않음)
         if (_selectedDragArrow != null)
-            _selectedDragArrow.Deselect();
+        {
+            _selectedDragArrow.CardView.Deselect();
+            _selectedDragArrow = null;
+        }
 
         _selectedCardView = view;
         _selectedDragArrow = view.GetComponent<CardDragArrow>();
+
+        // 화살표 새 카드 기준으로 즉시 갱신
+        arrow.SetupAndActivate(view.GetComponent<RectTransform>());
 
         OnCardSelected?.Invoke(view);
         RefreshHandLayout();
