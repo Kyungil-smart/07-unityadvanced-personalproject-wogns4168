@@ -5,6 +5,7 @@ public class BattleInitializer : MonoBehaviour
 {
     public BattleView battleView;
     public BattleHUD battleHUD;
+    public BattleResultPanel resultPanel;
     public List<MonsterBase> monsters;
 
     private BattlePresenter _presenter;
@@ -21,9 +22,9 @@ public class BattleInitializer : MonoBehaviour
         }
 
         Player player = FindAnyObjectByType<Player>();
-        _model = new BattleModel(monsters, deckToUse, player); // player 추가
+        _model = new BattleModel(monsters, deckToUse, player);
         BattleContext context = new BattleContext(player, monsters, _model);
-        _presenter = new BattlePresenter(_model, battleView, battleHUD, context);
+        _presenter = new BattlePresenter(_model, battleView, battleHUD, context, resultPanel);
     }
 
     private void Update()
