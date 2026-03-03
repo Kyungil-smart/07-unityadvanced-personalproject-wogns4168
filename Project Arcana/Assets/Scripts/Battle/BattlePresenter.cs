@@ -6,12 +6,14 @@ public class BattlePresenter
     private BattleView _view;
     private TurnSystem _turnSystem;
     private BattleHUD _hud;
+    private CardEffectProcessor _effectProcessor;
 
-    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud)
+    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context)
     {
         _model = model;
         _view = view;
         _hud = hud;
+        _effectProcessor = new CardEffectProcessor(context);
 
         _view.OnCardSelected += SelectCard;
         _view.OnCardUsed += UseCard;
@@ -26,14 +28,21 @@ public class BattlePresenter
         RefreshHUD();
     }
 
+
     private void SelectCard(CardView cardView)
     {
         _view.RefreshHandLayout();
     }
 
-    private void UseCard(CardView cardView)
+    private void UseCard(CardView cardView, ITargetable target)
     {
-        _model.UseCard(cardView.GetCardData());
+        CardData card = cardView.GetCardData();
+
+        // 효과 실행
+        _effectProcessor.Process(card, target);
+
+        // 덱에서 제거
+        _model.UseCard(card);
         _view.SpawnHand(_model.CurrentHand);
         RefreshHUD();
     }

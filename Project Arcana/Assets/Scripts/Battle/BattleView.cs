@@ -14,7 +14,7 @@ public class BattleView : MonoBehaviour
     private CardView _selectedCardView;
 
     public event Action<CardView> OnCardSelected;
-    public event Action<CardView> OnCardUsed;
+    public event Action<CardView, ITargetable> OnCardUsed;
 
     public void ClearHand()
     {
@@ -87,7 +87,7 @@ public class BattleView : MonoBehaviour
     {
         if (_selectedCardView == null) return;
 
-        OnCardUsed?.Invoke(_selectedCardView);
+        OnCardUsed?.Invoke(_selectedCardView, target); // target 같이 전달
 
         _selectedDragArrow?.Deselect();
         _selectedDragArrow = null;
