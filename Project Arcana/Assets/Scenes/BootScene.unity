@@ -769,6 +769,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62d3606cdb1e85944af605e44a58ee65, type: 2}
   - {fileID: 11400000, guid: 62d3606cdb1e85944af605e44a58ee65, type: 2}
   - {fileID: 11400000, guid: 62d3606cdb1e85944af605e44a58ee65, type: 2}
+  - {fileID: 11400000, guid: 5e53192ec7f4d6a4cb692675fb16189c, type: 2}
+  - {fileID: 11400000, guid: 17a49600461894d4b96988dfc612ca6e, type: 2}
+  - {fileID: 11400000, guid: 17a49600461894d4b96988dfc612ca6e, type: 2}
+  - {fileID: 11400000, guid: 17a49600461894d4b96988dfc612ca6e, type: 2}
+  - {fileID: 11400000, guid: 17a49600461894d4b96988dfc612ca6e, type: 2}
+  baseMaxEnergy: 3
 --- !u!1 &2048170447
 GameObject:
   m_ObjectHideFlags: 0

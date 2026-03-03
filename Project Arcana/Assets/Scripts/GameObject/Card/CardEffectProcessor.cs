@@ -8,9 +8,7 @@ public class CardEffectProcessor
     {
         _context = context;
     }
-
-    // 에너지 체크 후 처리
-    // 성공하면 true, 에너지 부족하면 false
+    
     public bool Process(CardData card, ITargetable target)
     {
         // 에너지 부족하면 카드 사용 불가
@@ -20,57 +18,38 @@ public class CardEffectProcessor
             return false;
         }
 
-        switch (card.effectType)
+        foreach (var effect in card.effects)
         {
-            case CardEffectType.DealDamage:
-                DealDamage(card, target);
-                break;
-            case CardEffectType.GainBlock:
-                GainBlock(card);
-                break;
-            case CardEffectType.Heal:
-                HealPlayer(card);
-                break;
-            case CardEffectType.ApplyPoison:
-                Debug.Log($"Poison {card.statusValue} 적용");
-                break;
-            case CardEffectType.ApplyWeak:
-                Debug.Log($"Weak {card.statusValue} 적용");
-                break;
-            case CardEffectType.ApplyBreak:
-                Debug.Log($"Break {card.statusValue} 적용");
-                break;
-            case CardEffectType.DrawCard:
-                DrawCard(card);
-                break;
-            default:
-                Debug.LogWarning($"처리되지 않은 effectType: {card.effectType}");
-                break;
+            ExecuteEffect(effect, target);
         }
 
         return true;
     }
-
-    private void DealDamage(CardData card, ITargetable target)
+    
+    private void ExecuteEffect(CardEffect effect, ITargetable target)
     {
-        if (target is Health health)
-            health.TakeDamage(card.attackValue);
-        else
-            Debug.LogWarning("DealDamage: target이 Health가 아님");
+        switch (effect.effectType)
+        {
+            case CardEffectType.DealDamage:
+                if (target is Health health) health.TakeDamage(effect.value);
+                break;
+            case CardEffectType.GainBlock:
+                _context.Player.AddShield(effect.value);
+                break;
+            case CardEffectType.Heal:
+                _context.Player.Heal(effect.value);
+                break;
+            case CardEffectType.DrawCard:
+                _context.Model.DrawCards((int)effect.value);
+                break;
+            case CardEffectType.ApplyVulnerable:
+            case CardEffectType.ApplyPoison:
+            case CardEffectType.ApplyWeak:
+            case CardEffectType.ApplyBreak:
+                // TODO: 상태이상 인터페이스(IStatus) 구현 후 연결
+                Debug.Log($"{effect.effectType} {effect.value} 적용 시도");
+                break;
+        }
     }
-
-    private void GainBlock(CardData card)
-    {
-        _context.Player.AddShield(card.defenseValue);
-    }
-
-    private void HealPlayer(CardData card)
-    {
-        _context.Player.Heal(card.healValue);
-    }
-
-    private void DrawCard(CardData card)
-    {
-        _context.Model.DrawCards(card.drawValue);
-    }
+    
 }
