@@ -20,12 +20,9 @@ public class BattleInitializer : MonoBehaviour
             return;
         }
 
-        _model = new BattleModel(monsters, deckToUse);
-
-        // Player, Monster 찾아서 Context 생성
         Player player = FindAnyObjectByType<Player>();
+        _model = new BattleModel(monsters, deckToUse, player); // player 추가
         BattleContext context = new BattleContext(player, monsters, _model);
-
         _presenter = new BattlePresenter(_model, battleView, battleHUD, context);
     }
 

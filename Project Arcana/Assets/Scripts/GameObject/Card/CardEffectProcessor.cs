@@ -9,8 +9,17 @@ public class CardEffectProcessor
         _context = context;
     }
 
-    public void Process(CardData card, ITargetable target)
+    // 에너지 체크 후 처리
+    // 성공하면 true, 에너지 부족하면 false
+    public bool Process(CardData card, ITargetable target)
     {
+        // 에너지 부족하면 카드 사용 불가
+        if (!_context.Model.UseEnergy(card.cost))
+        {
+            Debug.Log($"에너지 부족! 필요: {card.cost}, 현재: {_context.Model.CurrentEnergy}");
+            return false;
+        }
+
         switch (card.effectType)
         {
             case CardEffectType.DealDamage:
@@ -23,13 +32,13 @@ public class CardEffectProcessor
                 HealPlayer(card);
                 break;
             case CardEffectType.ApplyPoison:
-                ApplyPoison(card, target);
+                Debug.Log($"Poison {card.statusValue} 적용");
                 break;
             case CardEffectType.ApplyWeak:
-                ApplyWeak(card, target);
+                Debug.Log($"Weak {card.statusValue} 적용");
                 break;
             case CardEffectType.ApplyBreak:
-                ApplyBreak(card, target);
+                Debug.Log($"Break {card.statusValue} 적용");
                 break;
             case CardEffectType.DrawCard:
                 DrawCard(card);
@@ -38,6 +47,8 @@ public class CardEffectProcessor
                 Debug.LogWarning($"처리되지 않은 effectType: {card.effectType}");
                 break;
         }
+
+        return true;
     }
 
     private void DealDamage(CardData card, ITargetable target)
@@ -56,22 +67,6 @@ public class CardEffectProcessor
     private void HealPlayer(CardData card)
     {
         _context.Player.Heal(card.healValue);
-    }
-
-    private void ApplyPoison(CardData card, ITargetable target)
-    {
-        // 상태이상 시스템 구현 후 연결
-        Debug.Log($"Poison {card.statusValue} 적용 → {target}");
-    }
-
-    private void ApplyWeak(CardData card, ITargetable target)
-    {
-        Debug.Log($"Weak {card.statusValue} 적용 → {target}");
-    }
-
-    private void ApplyBreak(CardData card, ITargetable target)
-    {
-        Debug.Log($"Break {card.statusValue} 적용 → {target}");
     }
 
     private void DrawCard(CardData card)
