@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BattleModel
 {
@@ -66,5 +67,10 @@ public class BattleModel
         if (allDead) return BattleResult.Victory;
 
         return BattleResult.None;
+    }
+    
+    public void GainEnergy(int amount)
+    {
+        CurrentEnergy = Mathf.Min(CurrentEnergy + amount, MaxEnergy);
     }
 }

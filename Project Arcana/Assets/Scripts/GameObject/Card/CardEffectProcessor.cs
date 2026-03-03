@@ -64,6 +64,16 @@ public class CardEffectProcessor
                 if (target is Health breakTarget)
                     breakTarget.StatusManager.Apply(new BreakStatus((int)effect.value));
                 break;
+            case CardEffectType.GainEnergy:
+                _context.Model.GainEnergy((int)effect.value);
+                break;
+            case CardEffectType.DealDamageEqualToBlock:
+                if (target is Health blockHealth)
+                {
+                    float damage = _context.Player.CurrentShield;
+                    blockHealth.TakeDamage(damage);
+                }
+                break;
         }
     }
     
