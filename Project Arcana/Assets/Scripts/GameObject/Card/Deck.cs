@@ -56,4 +56,9 @@ public class Deck
             (list[i], list[rand]) = (list[rand], list[i]);
         }
     }
+    
+    public void AddCard(CardData card)
+    {
+        drawPile.Add(card);
+    }
 }

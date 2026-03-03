@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattlePresenter
@@ -8,13 +9,16 @@ public class BattlePresenter
     private BattleHUD _hud;
     private CardEffectProcessor _effectProcessor;
     private BattleResultPanel _resultPanel;
+    private CardRewardPanel _rewardPanel;
+    private int _goldReward = 10; // 기본 골드 보상
 
-    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context, BattleResultPanel resultPanel)
+    public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context, BattleResultPanel resultPanel, CardRewardPanel rewardPanel)
     {
         _model = model;
         _view = view;
         _hud = hud;
         _resultPanel = resultPanel;
+        _rewardPanel = rewardPanel;
         _effectProcessor = new CardEffectProcessor(context);
 
         _view.OnCardSelected += SelectCard;
@@ -100,13 +104,20 @@ public class BattlePresenter
     private void OnVictory()
     {
         _hud.SetEndTurnInteractable(false);
-        _view.ClearHand(); // 손패 정리
+        _view.ClearHand();
 
-        _resultPanel.ShowVictory(() =>
-        {
-            // 추후 맵으로 이동
-            Debug.Log("맵으로 이동");
-        });
+        _resultPanel.ShowVictory(_goldReward,
+            onGoldCollect: () => { },
+            onCardReward: () =>
+            {
+                List<CardData> rewardCards = RunManager.Instance.GetRandomRewardCards();
+                _rewardPanel.Show(rewardCards, () =>
+                {
+                    _resultPanel.HideAll(); // 카드 선택 후 dimPanel까지 끄기
+                    Debug.Log("맵으로 이동");
+                });
+            }
+        );
     }
 
     private void OnDefeat()
@@ -116,7 +127,6 @@ public class BattlePresenter
 
         _resultPanel.ShowDefeat(() =>
         {
-            // 처음 씬으로 이동
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         });
     }

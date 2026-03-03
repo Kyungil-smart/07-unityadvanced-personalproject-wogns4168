@@ -6,6 +6,7 @@ public class BattleInitializer : MonoBehaviour
     public BattleView battleView;
     public BattleHUD battleHUD;
     public BattleResultPanel resultPanel;
+    public CardRewardPanel rewardPanel;
     public List<MonsterBase> monsters;
 
     private BattlePresenter _presenter;
@@ -24,7 +25,7 @@ public class BattleInitializer : MonoBehaviour
         Player player = FindAnyObjectByType<Player>();
         _model = new BattleModel(monsters, deckToUse, player);
         BattleContext context = new BattleContext(player, monsters, _model);
-        _presenter = new BattlePresenter(_model, battleView, battleHUD, context, resultPanel);
+        _presenter = new BattlePresenter(_model, battleView, battleHUD, context, resultPanel, rewardPanel);
     }
 
     private void Update()
