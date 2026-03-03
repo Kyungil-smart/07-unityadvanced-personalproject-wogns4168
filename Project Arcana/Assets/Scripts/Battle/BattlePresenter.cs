@@ -63,6 +63,7 @@ public class BattlePresenter
     }
     private void OnEndTurnPressed()
     {
+        _hud.SetEnemyTurn();
         _turnSystem.ChangeTurn(_turnSystem.monsterState);
     }
     
