@@ -31,22 +31,38 @@ public class CardEffectProcessor
         switch (effect.effectType)
         {
             case CardEffectType.DealDamage:
-                if (target is Health health) health.TakeDamage(effect.value);
+                if (target is Health health)
+                {
+                    float damage = effect.value;
+
+                    // Weak 상태이상이면 플레이어 공격력 감소
+                    int weakStack = _context.Player.StatusManager.GetStack("Weak");
+                    if (weakStack > 0)
+                        damage *= WeakStatus.DamageMultiplier;
+
+                    health.TakeDamage(damage);
+                }
                 break;
             case CardEffectType.GainBlock:
-                _context.Player.AddShield(effect.value); // target 무시, 항상 플레이어
+                _context.Player.AddShield(effect.value);
                 break;
             case CardEffectType.Heal:
-                _context.Player.Heal(effect.value); // target 무시, 항상 플레이어
+                _context.Player.Heal(effect.value);
                 break;
             case CardEffectType.DrawCard:
                 _context.Model.DrawCards((int)effect.value);
                 break;
-            case CardEffectType.ApplyVulnerable:
             case CardEffectType.ApplyPoison:
+                if (target is Health poisonTarget)
+                    poisonTarget.StatusManager.Apply(new PoisonStatus((int)effect.value));
+                break;
             case CardEffectType.ApplyWeak:
+                if (target is Health weakTarget)
+                    weakTarget.StatusManager.Apply(new WeakStatus((int)effect.value));
+                break;
             case CardEffectType.ApplyBreak:
-                Debug.Log($"{effect.effectType} {effect.value} 적용 시도");
+                if (target is Health breakTarget)
+                    breakTarget.StatusManager.Apply(new BreakStatus((int)effect.value));
                 break;
         }
     }

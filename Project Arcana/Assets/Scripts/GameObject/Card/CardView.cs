@@ -31,6 +31,9 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
         nameText.text = cardData.cardName;
         costText.text = cardData.cost.ToString();
         artworkImage.sprite = cardData.cardImage;
+        
+        if (exhaustText != null)
+            exhaustText.gameObject.SetActive(cardData.isExhaust);
 
         if (cardData.effects.Count > 0)
         {
@@ -44,11 +47,14 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
                 // 타입에 따라 다른 색상 적용
                 string colorHex = type switch
                 {
-                    CardEffectType.DealDamage => "#FF5B5B", // 연빨강 (공격)
-                    CardEffectType.GainBlock => "#5B5BFF",  // 연파랑 (방어)
-                    CardEffectType.ApplyVulnerable => "#FFD700", // 골드 (취약)
-                    CardEffectType.DrawCard => "#50C878",   // 에메랄드 (드로우)
-                    _ => "#FFFFFF" // 기본 흰색
+                    CardEffectType.DealDamage  => "#FF5B5B", // 연빨강 (공격)
+                    CardEffectType.GainBlock   => "#5B9BFF", // 연파랑 (방어)
+                    CardEffectType.Heal        => "#50C878", // 에메랄드 (힐)
+                    CardEffectType.ApplyPoison => "#9B59B6", // 보라 (독)
+                    CardEffectType.ApplyWeak   => "#F39C12", // 주황 (약화)
+                    CardEffectType.ApplyBreak  => "#FFD700", // 골드 (브레이크)
+                    CardEffectType.DrawCard    => "#00CED1", // 청록 (드로우)
+                    _                          => "#FFFFFF"  // 기본 흰색
                 };
 
                 // 수치에 색상 태그 입히기 (예: <color=#FF5B5B>8</color>)

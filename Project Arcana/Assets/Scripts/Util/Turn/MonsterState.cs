@@ -27,12 +27,16 @@ public class MonsterState : ITurn
 
     private IEnumerator ActAndEndTurn(MonsterBase monster)
     {
+        // 몬스터 턴 시작 상태이상 처리
+        monster.StatusManager.OnTurnStart();
+
         yield return monster.StartCoroutine(monster.Act());
 
-        // 몬스터 공격 후 전투 종료 체크
+        // 몬스터 턴 종료 상태이상 처리
+        monster.StatusManager.OnTurnEnd();
+
         _presenter.OnMonsterTurnEnd();
 
-        // 전투가 끝나지 않았으면 플레이어 턴으로
         if (_model.CheckBattleResult() == BattleResult.None)
             _turnSystem.ChangeTurn(_turnSystem.playerState);
     }

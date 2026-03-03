@@ -10,16 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b729ab980ba751e48b28886e06fb1d3a, type: 3}
-  m_Name: Bash
+  m_Name: Quick Draw
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: "\uAC15\uD0C0"
-  description: "\uD53C\uD574 {0}\uC744 \uC8FC\uACE0 \uCDE8\uC57D {1}\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-  cost: 2
+  cardName: "\uB4DC\uB85C\uC6B0"
+  description: "\uCE74\uB4DC\uB97C {0}\uC7A5 \uBF51\uC2B5\uB2C8\uB2E4."
+  cost: 1
   isExhaust: 0
-  targetType: 0
-  cardImage: {fileID: 21300000, guid: 7092324b93851a14c858530cca4a6b26, type: 3}
+  targetType: 1
+  cardImage: {fileID: 21300000, guid: 2c04f4986ebc72e48a8b0c3eb2e42db2, type: 3}
   effects:
-  - effectType: 0
-    value: 8
-  - effectType: 5
+  - effectType: 6
     value: 2
