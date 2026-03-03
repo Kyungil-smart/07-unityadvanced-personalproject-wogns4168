@@ -21,9 +21,10 @@ public class PlayerState : ITurn
     {
         Debug.Log("플레이어 턴 시작");
 
-        // 실드 초기화
-        _player?.ResetShield();
+        // 상태이상 턴 시작 처리
+        _player?.StatusManager.OnTurnStart();
 
+        _player?.ResetShield();
         _model.RefillEnergy();
         _model.DrawCards(5);
         _view.SpawnHand(_model.CurrentHand);
@@ -37,6 +38,9 @@ public class PlayerState : ITurn
     public void Exit()
     {
         Debug.Log("플레이어 턴 종료");
+
+        // 상태이상 턴 종료 처리 (Poison 피해 등)
+        _player?.StatusManager.OnTurnEnd();
 
         _model.DiscardHand();
         _view.SpawnHand(_model.CurrentHand);

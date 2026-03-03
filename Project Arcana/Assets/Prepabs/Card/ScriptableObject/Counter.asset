@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b729ab980ba751e48b28886e06fb1d3a, type: 3}
-  m_Name: Bash
+  m_Name: Counter
   m_EditorClassIdentifier: Assembly-CSharp::CardData
-  cardName: "\uAC15\uD0C0"
-  description: "\uD53C\uD574 {0}\uC744 \uC8FC\uACE0 \uCDE8\uC57D {1}\uB97C \uBD80\uC5EC\uD569\uB2C8\uB2E4."
-  cost: 2
+  cardName: "\uBC18\uACA9"
+  description: "\uBC29\uC5B4\uB3C4 {0}\uC744 \uC5BB\uACE0 \uC801\uC5D0\uAC8C {1}
+    \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4."
+  cost: 1
   isExhaust: 0
   targetType: 0
-  cardImage: {fileID: 21300000, guid: 7092324b93851a14c858530cca4a6b26, type: 3}
+  cardImage: {fileID: 21300000, guid: d659f7396cd57754eba78763cf986c51, type: 3}
   effects:
+  - effectType: 1
+    value: 5
   - effectType: 0
-    value: 8
-  - effectType: 5
-    value: 2
+    value: 5
