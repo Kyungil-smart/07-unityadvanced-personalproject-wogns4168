@@ -33,7 +33,7 @@ public class RunManager : MonoBehaviour
     {
         currentDeck = new Deck();
         currentDeck.Init(startingDeck);
-        Gold = 0;
+        Gold = 100;
         CurrentHp = 0; // 초기화 (0이면 BattleInitializer에서 maxHealth 사용)
         MaxHp = 0;
     }
@@ -81,5 +81,11 @@ public class RunManager : MonoBehaviour
     {
         CurrentHp = current;
         MaxHp = max;
+    }
+    
+    public void RemoveCardFromDeck(CardData card)
+    {
+        currentDeck.RemoveCard(card);
+        Debug.Log($"{card.cardName} 덱에서 제거");
     }
 }

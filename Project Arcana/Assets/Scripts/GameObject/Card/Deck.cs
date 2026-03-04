@@ -70,4 +70,10 @@ public class Deck
         discardPile.Clear();
         Shuffle(drawPile);
     }
+    
+    public void RemoveCard(CardData card)
+    {
+        if (drawPile.Contains(card)) drawPile.Remove(card);
+        else if (discardPile.Contains(card)) discardPile.Remove(card);
+    }
 }

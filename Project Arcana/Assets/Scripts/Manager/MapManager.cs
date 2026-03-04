@@ -65,16 +65,16 @@ public class MapManager : MonoBehaviour
         // 초반 (0~2층): 전투 70%, 이벤트 20%, 상점 10%
         if (floor <= 2)
             return GetWeightedRandom(new[] { NodeType.Battle, NodeType.Event, NodeType.Shop },
-                                     new[] { 70, 20, 10 });
+                                     new[] { 50, 25, 25 });
 
         // 중반 (3~6층): 전투 50%, 엘리트 20%, 이벤트 20%, 상점 10%
         if (floor <= 6)
             return GetWeightedRandom(new[] { NodeType.Battle, NodeType.Elite, NodeType.Event, NodeType.Shop },
-                                     new[] { 50, 20, 20, 10 });
+                                     new[] { 40, 10, 25, 25 });
 
         // 후반 (7~8층): 전투 40%, 엘리트 30%, 이벤트 20%, 상점 10%
         return GetWeightedRandom(new[] { NodeType.Battle, NodeType.Elite, NodeType.Event, NodeType.Shop },
-                                 new[] { 40, 30, 20, 10 });
+                                 new[] { 20, 30, 25, 25 });
     }
 
     private NodeType GetWeightedRandom(NodeType[] types, int[] weights)
