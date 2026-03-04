@@ -118,7 +118,7 @@ public class BattlePresenter
                 _rewardPanel.Show(rewardCards, () =>
                 {
                     _resultPanel.HideAll(); // 카드 선택 후 dimPanel까지 끄기
-                    Debug.Log("맵으로 이동");
+                    MapManager.Instance.OnNodeCleared();
                 });
             }
         );
