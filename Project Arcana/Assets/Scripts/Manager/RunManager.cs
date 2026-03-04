@@ -11,6 +11,7 @@ public class RunManager : MonoBehaviour
 
     public Deck currentDeck { get; private set; }
     public int Gold { get; private set; }
+    public MapNode CurrentMapNode { get; private set; }
 
     private void Awake()
     {
@@ -65,5 +66,10 @@ public class RunManager : MonoBehaviour
         }
 
         return result;
+    }
+    
+    public void SetCurrentNode(MapNode node)
+    {
+        CurrentMapNode = node;
     }
 }
