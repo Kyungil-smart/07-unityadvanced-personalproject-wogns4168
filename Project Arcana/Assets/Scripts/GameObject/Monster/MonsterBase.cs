@@ -43,4 +43,13 @@ public abstract class MonsterBase : Health, ITargetable
         base.Die();
         Reward();
     }
+    
+    protected void Attack(Player player, float damage)
+    {
+        int weakStack = StatusManager.GetStack("Weak");
+        if (weakStack > 0)
+            damage *= WeakStatus.DamageMultiplier;
+
+        player.TakeDamage(damage);
+    }
 }

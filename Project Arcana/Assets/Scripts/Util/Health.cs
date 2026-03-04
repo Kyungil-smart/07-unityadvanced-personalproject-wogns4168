@@ -13,7 +13,9 @@ public class Health : MonoBehaviour
 
     public virtual void Awake()
     {
-        currentHealth = maxHealth;
+        if (currentHealth <= 0)
+            currentHealth = maxHealth;
+    
         StatusManager = new StatusManager(this);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
@@ -41,5 +43,10 @@ public class Health : MonoBehaviour
     public virtual void Die()
     {
         gameObject.SetActive(false);
+    }
+    
+    protected void InvokeHealthChanged()
+    {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 }

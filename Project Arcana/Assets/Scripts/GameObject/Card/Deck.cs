@@ -61,4 +61,19 @@ public class Deck
     {
         drawPile.Add(card);
     }
+    
+    public void ResetForBattle()
+    {
+        foreach (var card in hand) drawPile.Add(card);
+        foreach (var card in discardPile) drawPile.Add(card);
+        hand.Clear();
+        discardPile.Clear();
+        Shuffle(drawPile);
+    }
+    
+    public void RemoveCard(CardData card)
+    {
+        if (drawPile.Contains(card)) drawPile.Remove(card);
+        else if (discardPile.Contains(card)) discardPile.Remove(card);
+    }
 }

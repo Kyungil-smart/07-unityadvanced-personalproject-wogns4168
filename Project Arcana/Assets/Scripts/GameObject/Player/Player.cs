@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 public class Player : PlayerHealth, ITargetable
 {
-    public string Name { get; }
+    public string Name;
 
     public void Act()
     {

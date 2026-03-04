@@ -1,36 +1,49 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TitleSceneController : MonoBehaviour
 {
     [SerializeField] private string mapSceneName = "MapScene";
+    [SerializeField] private GameObject nameInputPanel;
+    [SerializeField] private TMP_InputField nameInputField;
 
+    private void Start()
+    {
+        nameInputPanel.SetActive(false);
+    }
+
+    // Game Start 버튼
     public void OnGameStart()
     {
-        // 1. 새로운 런 시작 (덱, 골드 초기화)
-        if (RunManager.Instance != null)
-        {
-            RunManager.Instance.StartNewRun();
-        }
+        nameInputPanel.SetActive(true);
+    }
 
-        // 2. 새로운 맵 생성
-        if (MapManager.Instance != null)
-        {
-            MapManager.Instance.GenerateMap();
-        }
+    // 확인 버튼
+    public void OnConfirm()
+    {
+        string playerName = nameInputField.text.Trim();
+        if (string.IsNullOrEmpty(playerName))
+            playerName = "";
 
-        // 3. 맵 씬으로 이동
+        RunManager.Instance.SetPlayerName(playerName);
+        RunManager.Instance.StartNewRun();
+        MapManager.Instance.GenerateMap();
         SceneManager.LoadScene(mapSceneName);
+    }
+
+    // 취소 버튼
+    public void OnCancel()
+    {
+        nameInputPanel.SetActive(false);
     }
 
     public void OnExitGame()
     {
-        // 유니티 에디터에서 실행 중일 때
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                // 실제 빌드된 게임(PC, 모바일 등)에서 실행 중일 때
-                Application.Quit();
-        #endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
     }
 }

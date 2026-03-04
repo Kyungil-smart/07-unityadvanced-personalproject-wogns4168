@@ -12,6 +12,8 @@ public class BattleResultPanel : MonoBehaviour
     [SerializeField] private TMP_Text goldText;
     [SerializeField] private Button cardRewardButton;
     [SerializeField] private TMP_Text cardRewardButtonText;
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Button gameOverTitleButton;
 
     private void Start()
     {
@@ -47,14 +49,12 @@ public class BattleResultPanel : MonoBehaviour
     public void ShowDefeat(Action onContinue)
     {
         dimPanel.SetActive(true);
-        panel.SetActive(true);
-        resultText.text = "패배...";
+        panel.SetActive(false); // 기존 패널 숨기고
+        gameOverPanel.SetActive(true); // 게임오버 패널 표시
 
-        goldButton.gameObject.SetActive(false);
-        cardRewardButton.onClick.RemoveAllListeners();
-        cardRewardButton.onClick.AddListener(() =>
+        gameOverTitleButton.onClick.RemoveAllListeners();
+        gameOverTitleButton.onClick.AddListener(() =>
         {
-            Hide();
             onContinue?.Invoke();
         });
     }
