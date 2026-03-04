@@ -16,25 +16,29 @@ public class MapNodeView : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         _node = node;
         _originalScale = transform.localScale;
 
-        // 타입에 맞는 스프라이트 설정
         int spriteIndex = (int)node.Type;
         if (nodeSprites != null && spriteIndex < nodeSprites.Length)
             nodeImage.sprite = nodeSprites[spriteIndex];
 
-        if (!node.IsAccessible)
-        {
-            nodeImage.color = new Color(0.3f, 0.3f, 0.3f, 0.5f);
-            return;
-        }
-
+        // 상태에 따른 색상 분기
         if (node.IsCleared)
         {
-            nodeImage.color = new Color(1f, 1f, 1f, 0.4f);
-            return;
+            // 이미 클리어한 노드 (회색빛 혹은 반투명)
+            nodeImage.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+            _isPulsing = false;
         }
-
-        nodeImage.color = Color.white;
-        _isPulsing = true;
+        else if (node.IsAccessible)
+        {
+            // 현재 갈 수 있는 노드 (밝게 표시 + 두근거림)
+            nodeImage.color = Color.white;
+            _isPulsing = true; 
+        }
+        else
+        {
+            // 갈 수 없는 노드 (어둡고 클릭 불가)
+            nodeImage.color = new Color(0.2f, 0.2f, 0.2f, 0.8f);
+            _isPulsing = false;
+        }
     }
 
     private void Update()

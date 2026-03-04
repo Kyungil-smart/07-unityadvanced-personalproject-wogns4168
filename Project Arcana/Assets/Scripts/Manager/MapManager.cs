@@ -155,11 +155,23 @@ public class MapManager : MonoBehaviour
     public void OnNodeCleared()
     {
         if (CurrentNode == null) return;
+    
         CurrentNode.IsCleared = true;
-
+        
+        foreach (var floor in Floors)
+        {
+            foreach (var node in floor)
+            {
+                node.IsAccessible = false;
+            }
+        }
+        
         foreach (var next in CurrentNode.NextNodes)
+        {
             next.IsAccessible = true;
+        }
 
+        // 맵 씬으로 이동
         SceneManager.LoadScene(mapScene);
     }
 }
