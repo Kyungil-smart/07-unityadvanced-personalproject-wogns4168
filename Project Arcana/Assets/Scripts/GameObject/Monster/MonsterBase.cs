@@ -6,6 +6,7 @@ public abstract class MonsterBase : Health, ITargetable
     public abstract string Name { get; }
     public abstract IEnumerator Act();
     public abstract void Reward();
+    public abstract int IntentDamage { get; }
 
     private BattleView _battleView;
     private SpriteRenderer _spriteRenderer;

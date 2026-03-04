@@ -57,6 +57,9 @@ public class BattlePresenter
         _model.UseCard(card);
         _view.SpawnHand(_model.CurrentHand);
         RefreshHUD();
+        
+        foreach (var monster in _model.Monsters)
+            monster.GetComponent<MonsterIntentUI>()?.UpdateIntent();
 
         // 카드 사용 후 전투 종료 체크
         CheckBattleEnd();

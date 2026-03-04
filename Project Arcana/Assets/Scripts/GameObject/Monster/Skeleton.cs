@@ -7,6 +7,8 @@ public class Skeleton : MonsterBase
     [SerializeField] private Animator animator;
 
     public override string Name => "Skeleton";
+    
+    public override int IntentDamage => (int)attackDamage;
 
     protected override void Start()
     {
