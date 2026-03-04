@@ -92,15 +92,19 @@ public class ShopPanel : MonoBehaviour
     {
         foreach (var card in _removeCards) Destroy(card);
         _removeCards.Clear();
+        
+        var deck = RunManager.Instance.currentDeck;
 
         List<CardData> allCards = new List<CardData>(RunManager.Instance.currentDeck.drawPile);
         allCards.AddRange(RunManager.Instance.currentDeck.discardPile);
+        allCards.AddRange(RunManager.Instance.currentDeck.exhaustPile);
+        allCards.AddRange(deck.hand);
 
         foreach (var cardData in allCards)
         {
             GameObject obj = Instantiate(cardPrefab, removeCardContainer);
             RectTransform cardRect = obj.GetComponent<RectTransform>();
-            cardRect.localScale = Vector3.one * 40f;
+            cardRect.localScale = Vector3.one * 70f;
             obj.GetComponent<CardView>().Setup(cardData);
 
             CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
