@@ -80,7 +80,7 @@ public class MapView : MonoBehaviour
     {
         GameObject lineObj = new GameObject("Line");
         lineObj.transform.SetParent(content, false);
-        lineObj.transform.SetAsFirstSibling();
+        lineObj.transform.SetSiblingIndex(1);
 
         Image line = lineObj.AddComponent<Image>();
         line.color = new Color(1f, 1f, 1f, 0.3f);

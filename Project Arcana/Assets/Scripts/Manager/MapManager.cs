@@ -101,34 +101,23 @@ public class MapManager : MonoBehaviour
             List<MapNode> current = Floors[floor];
             List<MapNode> next = Floors[floor + 1];
 
-            // 모든 현재 층 노드가 최소 1개 연결 보장
-            foreach (var node in current)
-            {
-                int connectCount = Mathf.Min(Random.Range(1, 3), next.Count);
-                List<MapNode> shuffled = new List<MapNode>(next);
-                Shuffle(shuffled);
+            // 다음 층 노드마다 부모 1개만 연결
+            List<MapNode> shuffledNext = new List<MapNode>(next);
+            Shuffle(shuffledNext);
 
-                for (int i = 0; i < connectCount; i++)
-                {
-                    if (!node.NextNodes.Contains(shuffled[i]))
-                        node.NextNodes.Add(shuffled[i]);
-                }
+            // 현재 층 노드가 최소 1개 연결 보장
+            for (int i = 0; i < next.Count; i++)
+            {
+                MapNode parent = current[i % current.Count];
+                if (!parent.NextNodes.Contains(shuffledNext[i]))
+                    parent.NextNodes.Add(shuffledNext[i]);
             }
 
-            // 다음 층 노드가 하나도 연결 안 됐으면 강제 연결
-            foreach (var nextNode in next)
+            // 연결 안 된 현재 층 노드 → 랜덤 다음 노드 연결
+            foreach (var node in current)
             {
-                bool hasConnection = false;
-                foreach (var node in current)
-                {
-                    if (node.NextNodes.Contains(nextNode))
-                    {
-                        hasConnection = true;
-                        break;
-                    }
-                }
-                if (!hasConnection)
-                    current[Random.Range(0, current.Count)].NextNodes.Add(nextNode);
+                if (node.NextNodes.Count == 0)
+                    node.NextNodes.Add(next[Random.Range(0, next.Count)]);
             }
         }
     }
