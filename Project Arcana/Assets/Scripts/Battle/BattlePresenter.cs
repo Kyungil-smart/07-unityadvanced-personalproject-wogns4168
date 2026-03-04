@@ -10,6 +10,7 @@ public class BattlePresenter
     private CardEffectProcessor _effectProcessor;
     private BattleResultPanel _resultPanel;
     private CardRewardPanel _rewardPanel;
+    private BattleContext _context;
     private int _goldReward = 10; // 기본 골드 보상
 
     public BattlePresenter(BattleModel model, BattleView view, BattleHUD hud, BattleContext context, BattleResultPanel resultPanel, CardRewardPanel rewardPanel)
@@ -19,6 +20,7 @@ public class BattlePresenter
         _hud = hud;
         _resultPanel = resultPanel;
         _rewardPanel = rewardPanel;
+        _context = context;
         _effectProcessor = new CardEffectProcessor(context);
 
         _view.OnCardSelected += SelectCard;
@@ -94,6 +96,9 @@ public class BattlePresenter
         if (result == BattleResult.Victory)
         {
             Debug.Log("전투 승리!");
+            RunManager.Instance.SavePlayerHp(
+                _context.Player.currentHealth,
+                _context.Player.maxHealth);
             _hud.SetEndTurnInteractable(false); // 버튼 비활성화
             OnVictory();
         }

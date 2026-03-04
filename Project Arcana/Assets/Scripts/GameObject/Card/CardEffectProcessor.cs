@@ -34,12 +34,6 @@ public class CardEffectProcessor
                 if (target is Health health)
                 {
                     float damage = effect.value;
-
-                    // Weak 상태이상이면 플레이어 공격력 감소
-                    int weakStack = _context.Player.StatusManager.GetStack("Weak");
-                    if (weakStack > 0)
-                        damage *= WeakStatus.DamageMultiplier;
-
                     health.TakeDamage(damage);
                 }
                 break;

@@ -26,5 +26,5 @@ public class WeakStatus : IStatus
     }
 
     // 공격력 감소 계수 (외부에서 참조)
-    public static float DamageMultiplier => 0.75f;
+    public static float DamageMultiplier => 0.5f;
 }

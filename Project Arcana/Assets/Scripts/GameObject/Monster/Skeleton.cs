@@ -20,16 +20,14 @@ public class Skeleton : MonsterBase
     {
         Debug.Log("Skeleton 공격!");
 
-        // 공격 애니메이션
         if (animator != null)
             animator.SetTrigger("Attack");
 
         yield return new WaitForSeconds(0.5f);
 
-        // 플레이어 찾아서 데미지
         Player player = FindAnyObjectByType<Player>();
         if (player != null)
-            player.TakeDamage(attackDamage);
+            Attack(player, attackDamage); // 직접 TakeDamage 대신
 
         yield return new WaitForSeconds(0.5f);
     }

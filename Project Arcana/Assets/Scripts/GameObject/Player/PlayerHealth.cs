@@ -43,4 +43,12 @@ public class PlayerHealth : Health
         _currentShield = 0;
         OnShieldChanged?.Invoke(_currentShield);
     }
+    
+    public void SetHealth(float current, float max)
+    {
+        maxHealth = max;
+        currentHealth = current;
+        InvokeHealthChanged();
+    }
+    
 }

@@ -12,6 +12,8 @@ public class RunManager : MonoBehaviour
     public Deck currentDeck { get; private set; }
     public int Gold { get; private set; }
     public MapNode CurrentMapNode { get; private set; }
+    public float CurrentHp { get; private set; }
+    public float MaxHp { get; private set; }
 
     private void Awake()
     {
@@ -32,6 +34,8 @@ public class RunManager : MonoBehaviour
         currentDeck = new Deck();
         currentDeck.Init(startingDeck);
         Gold = 0;
+        CurrentHp = 0; // 초기화 (0이면 BattleInitializer에서 maxHealth 사용)
+        MaxHp = 0;
     }
 
     public void AddGold(int amount)
@@ -71,5 +75,11 @@ public class RunManager : MonoBehaviour
     public void SetCurrentNode(MapNode node)
     {
         CurrentMapNode = node;
+    }
+    
+    public void SavePlayerHp(float current, float max)
+    {
+        CurrentHp = current;
+        MaxHp = max;
     }
 }
