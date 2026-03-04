@@ -5,8 +5,7 @@ using System;
 
 public class ShopCardInteraction : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] private GameObject soldOutOverlay;
-
+    private GameObject _soldOutOverlay;
     private CardData _cardData;
     private int _price;
     private Action<CardData, int> _onSelected;
@@ -21,7 +20,8 @@ public class ShopCardInteraction : MonoBehaviour, IPointerEnterHandler, IPointer
         _onSelected = onSelected;
         _originalScale = transform.localScale;
 
-        if (soldOutOverlay != null) soldOutOverlay.SetActive(false);
+        _soldOutOverlay = transform.Find("SoldOutOverlay")?.gameObject;
+        if (_soldOutOverlay != null) _soldOutOverlay.SetActive(false);
     }
 
     public void SetGoldGroup(GameObject goldGroup)
@@ -55,7 +55,7 @@ public class ShopCardInteraction : MonoBehaviour, IPointerEnterHandler, IPointer
         RunManager.Instance.AddCardToDeck(_cardData);
         _isSold = true;
 
-        if (soldOutOverlay != null) soldOutOverlay.SetActive(true);
+        if (_soldOutOverlay != null) _soldOutOverlay.SetActive(true);
         if (_goldGroup != null) _goldGroup.SetActive(false);
         transform.localScale = _originalScale;
         _onSelected?.Invoke(_cardData, _price);
