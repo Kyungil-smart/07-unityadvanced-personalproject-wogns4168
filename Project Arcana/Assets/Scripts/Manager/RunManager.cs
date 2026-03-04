@@ -35,8 +35,8 @@ public class RunManager : MonoBehaviour
         currentDeck = new Deck();
         currentDeck.Init(startingDeck);
         Gold = 100;
-        CurrentHp = 0; // 초기화 (0이면 BattleInitializer에서 maxHealth 사용)
-        MaxHp = 0;
+        CurrentHp = 100; // 초기화 (0이면 BattleInitializer에서 maxHealth 사용)
+        MaxHp = 100;
     }
 
     public void AddGold(int amount)

@@ -24,7 +24,7 @@ public class TitleSceneController : MonoBehaviour
     {
         string playerName = nameInputField.text.Trim();
         if (string.IsNullOrEmpty(playerName))
-            playerName = "모험가";
+            playerName = "";
 
         RunManager.Instance.SetPlayerName(playerName);
         RunManager.Instance.StartNewRun();

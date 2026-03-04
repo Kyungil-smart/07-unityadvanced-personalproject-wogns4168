@@ -31,6 +31,12 @@ public class TopBarUI : MonoBehaviour
                 ClearDeckCards();
             });
     }
+    
+    private void Update()
+    {
+        if (hpText != null)
+            hpText.text = $"{(int)RunManager.Instance.CurrentHp} / {(int)RunManager.Instance.MaxHp}";
+    }
 
     public void Refresh()
     {

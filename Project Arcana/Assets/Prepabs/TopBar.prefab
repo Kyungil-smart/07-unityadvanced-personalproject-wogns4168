@@ -172,11 +172,12 @@ MonoBehaviour:
   goldText: {fileID: 2008176614336029860}
   hpText: {fileID: 1149013834940641967}
   floorText: {fileID: 3466233349534660777}
-  deckButton: {fileID: 0}
-  playerNameText: {fileID: 0}
+  deckButton: {fileID: 2856829683223781446}
+  playerNameText: {fileID: 552903185434683683}
   deckPanel: {fileID: 0}
   deckCardContainer: {fileID: 0}
   cardPrefab: {fileID: 8379937650794098350, guid: 9e2a355739a646d4e9ed3477bfcf6f2c, type: 3}
+  deckCloseButton: {fileID: 0}
 --- !u!1 &2515309855224055124
 GameObject:
   m_ObjectHideFlags: 0
