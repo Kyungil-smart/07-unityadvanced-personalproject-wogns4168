@@ -5,7 +5,7 @@ public class MonsterIntentUI : MonoBehaviour
 {
     [SerializeField] private GameObject intentPrefab; // 프리팹 연결
     [SerializeField] private Canvas hpCanvas;
-    [SerializeField] private Vector3 offset = new Vector3(0, -2.5f, 0);
+    [SerializeField] private Vector3 offset = new Vector3(0, -2f, 0);
     [SerializeField] private Vector3 scale = new Vector3(-0.8f, -0.8f, 0);
 
     private MonsterBase _monster;
