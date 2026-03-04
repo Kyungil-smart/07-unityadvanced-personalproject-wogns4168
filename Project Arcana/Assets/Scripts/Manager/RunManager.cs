@@ -41,8 +41,8 @@ public class RunManager : MonoBehaviour
 
     public void AddGold(int amount)
     {
-        Gold += amount;
-        Debug.Log($"골드 +{amount}, 현재 골드: {Gold}");
+        Gold = Mathf.Max(0, Gold + amount);
+        Debug.Log($"골드 {amount}, 현재 골드: {Gold}");
     }
 
     public void AddCardToDeck(CardData card)
