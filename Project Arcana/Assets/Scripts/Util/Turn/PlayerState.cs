@@ -19,16 +19,15 @@ public class PlayerState : ITurn
 
     public void Enter()
     {
-        Debug.Log("플레이어 턴 시작");
+        // Intent + 상태이상 UI 갱신
+        foreach (var monster in _model.Monsters)
+            monster.GetComponent<MonsterIntentUI>()?.UpdateIntent();
 
-        // 상태이상 턴 시작 처리
         _player?.StatusManager.OnTurnStart();
-
         _player?.ResetShield();
         _model.RefillEnergy();
         _model.DrawCards(5);
         _view.SpawnHand(_model.CurrentHand);
-
         _hud.SetPlayerTurn();
         RefreshHUD();
     }
