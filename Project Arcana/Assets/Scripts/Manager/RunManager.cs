@@ -14,6 +14,7 @@ public class RunManager : MonoBehaviour
     public MapNode CurrentMapNode { get; private set; }
     public float CurrentHp { get; private set; }
     public float MaxHp { get; private set; }
+    public string PlayerName { get; private set; }
 
     private void Awake()
     {
@@ -87,5 +88,10 @@ public class RunManager : MonoBehaviour
     {
         currentDeck.RemoveCard(card);
         Debug.Log($"{card.cardName} 덱에서 제거");
+    }
+    
+    public void SetPlayerName(string name)
+    {
+        PlayerName = name;
     }
 }
