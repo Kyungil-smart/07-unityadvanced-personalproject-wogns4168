@@ -31,6 +31,7 @@ public class BattleInitializer : MonoBehaviour
         if (RunManager.Instance.CurrentHp > 0)
             player.SetHealth(RunManager.Instance.CurrentHp, RunManager.Instance.MaxHp);
 
+        RunManager.Instance.SavePlayerHp(player.currentHealth, player.maxHealth);
         _model = new BattleModel(monsters, deckToUse, player);
         BattleContext context = new BattleContext(player, monsters, _model);
         _presenter = new BattlePresenter(_model, battleView, battleHUD, context, resultPanel, rewardPanel);

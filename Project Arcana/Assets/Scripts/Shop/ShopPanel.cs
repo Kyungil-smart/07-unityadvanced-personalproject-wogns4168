@@ -131,12 +131,14 @@ public class ShopPanel : MonoBehaviour
             Debug.Log("골드 부족!");
             return;
         }
-        Player player = FindAnyObjectByType<Player>();
-        if (player == null) return;
 
+        float healAmount = RunManager.Instance.MaxHp * 0.3f;
+        float newHp = Mathf.Min(RunManager.Instance.CurrentHp + healAmount, RunManager.Instance.MaxHp);
+    
         RunManager.Instance.AddGold(-healCost);
-        player.Heal(player.maxHealth * 0.3f);
-        RunManager.Instance.SavePlayerHp(player.currentHealth, player.maxHealth);
+        RunManager.Instance.SavePlayerHp(newHp, RunManager.Instance.MaxHp);
+    
+        FindAnyObjectByType<TopBarUI>()?.Refresh();
     }
 
     private void OnRemoveCardClicked()

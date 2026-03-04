@@ -15,6 +15,7 @@ public class TopBarUI : MonoBehaviour
     [SerializeField] private GameObject deckPanel;
     [SerializeField] private Transform deckCardContainer;
     [SerializeField] private GameObject cardPrefab;
+    [SerializeField] private Button deckCloseButton;
 
     private List<GameObject> _deckCards = new List<GameObject>();
 
@@ -23,6 +24,12 @@ public class TopBarUI : MonoBehaviour
         Refresh();
         deckButton.onClick.AddListener(OnDeckButtonClicked);
         if (deckPanel != null) deckPanel.SetActive(false);
+        if (deckCloseButton != null) 
+            deckCloseButton.onClick.AddListener(() => 
+            {
+                deckPanel.SetActive(false);
+                ClearDeckCards();
+            });
     }
 
     public void Refresh()
@@ -34,9 +41,7 @@ public class TopBarUI : MonoBehaviour
         // HP
         if (hpText != null)
         {
-            Player player = FindAnyObjectByType<Player>();
-            if (player != null)
-                hpText.text = $"{(int)player.currentHealth}/{(int)player.maxHealth}";
+            hpText.text = $"{(int)RunManager.Instance.CurrentHp} / {(int)RunManager.Instance.MaxHp}";
         }
 
         // 층수
@@ -48,7 +53,7 @@ public class TopBarUI : MonoBehaviour
         }
         
         if (playerNameText != null)
-            playerNameText.text = RunManager.Instance.PlayerName;
+            playerNameText.text = $"모험가 {RunManager.Instance.PlayerName}";
     }
 
     private void OnDeckButtonClicked()
