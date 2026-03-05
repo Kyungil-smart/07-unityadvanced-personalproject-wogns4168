@@ -174,4 +174,9 @@ public class MapManager : MonoBehaviour
 
         SceneManager.LoadScene(mapScene);
     }
+    
+    public void LoadFloors(List<List<MapNode>> floors)
+    {
+        Floors = floors;
+    }
 }

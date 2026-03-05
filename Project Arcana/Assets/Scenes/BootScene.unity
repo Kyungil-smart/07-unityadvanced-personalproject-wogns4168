@@ -557,6 +557,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5992ecf69ac443a1a2290c3156312e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+--- !u!1 &1354858452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1354858454}
+  - component: {fileID: 1354858453}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1354858453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354858452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b3a25d8a22f4e79aed25af89ab29968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveManager
+--- !u!4 &1354858454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354858452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 313.55487, y: 241.5168, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1369273607
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,6 +908,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 119865a2173da0441a7fff45e14c10cf, type: 2}
   - {fileID: 11400000, guid: efb4769af3da98d4288555efd0f6480f, type: 2}
   - {fileID: 11400000, guid: c04ee1878cbce6244bc46e8ff4fc99f9, type: 2}
+  - {fileID: 11400000, guid: 5e53192ec7f4d6a4cb692675fb16189c, type: 2}
+  - {fileID: 11400000, guid: 17a49600461894d4b96988dfc612ca6e, type: 2}
+  - {fileID: 11400000, guid: 62d3606cdb1e85944af605e44a58ee65, type: 2}
   baseMaxEnergy: 3
 --- !u!1 &2048170447
 GameObject:
@@ -978,5 +1025,6 @@ SceneRoots:
   - {fileID: 557990826}
   - {fileID: 1611151312}
   - {fileID: 189474291}
+  - {fileID: 1354858454}
   - {fileID: 2048170451}
   - {fileID: 253927621}

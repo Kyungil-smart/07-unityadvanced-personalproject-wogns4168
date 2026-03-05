@@ -1,16 +1,21 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TitleSceneController : MonoBehaviour
 {
     [SerializeField] private string mapSceneName = "MapScene";
     [SerializeField] private GameObject nameInputPanel;
     [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private Button loadButton;
 
     private void Start()
     {
         nameInputPanel.SetActive(false);
+        
+        if (loadButton != null)
+            loadButton.interactable = SaveManager.Instance.HasSave();
     }
 
     // Game Start 버튼
@@ -36,6 +41,12 @@ public class TitleSceneController : MonoBehaviour
     public void OnCancel()
     {
         nameInputPanel.SetActive(false);
+    }
+    // 로드 버튼
+    public void OnLoadGame()
+    {
+        SaveManager.Instance.Load();
+        SceneManager.LoadScene("MapScene");
     }
 
     public void OnExitGame()
