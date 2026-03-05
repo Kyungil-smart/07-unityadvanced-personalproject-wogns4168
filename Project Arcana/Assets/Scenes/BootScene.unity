@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f8fe021f2e597428eb8278c7c560e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  cardPrefab: {fileID: 8379937650794098350, guid: 9e2a355739a646d4e9ed3477bfcf6f2c, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

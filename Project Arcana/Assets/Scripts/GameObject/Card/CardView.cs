@@ -81,6 +81,20 @@ public class CardView : MonoBehaviour, IPoolable, IPointerEnterHandler, IPointer
         IsHover = false;
         IsSelected = false;
         IsDragging = false;
+        transform.localRotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
+
+        // 동적으로 붙은 컴포넌트 제거
+        ShopCardInteraction shop = GetComponent<ShopCardInteraction>();
+        if (shop != null) Destroy(shop);
+
+        RewardCardInteraction reward = GetComponent<RewardCardInteraction>();
+        if (reward != null) Destroy(reward);
+
+        // CardDragArrow 초기화
+        CardDragArrow drag = GetComponent<CardDragArrow>();
+        if (drag != null) drag.enabled = true;
+
         gameObject.SetActive(false);
     }
 

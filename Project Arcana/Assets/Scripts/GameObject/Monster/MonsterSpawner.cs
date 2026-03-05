@@ -25,9 +25,9 @@ public class MonsterSpawner : MonoBehaviour
             GameObject obj = Instantiate(prefab, spawnPoints[i].position, Quaternion.identity);
             MonsterBase monster = obj.GetComponent<MonsterBase>();
 
-            // 층수별 스탯 증가
-            float hp = selected[i].baseHp * (1f + floor * 0.2f);
-            float attack = selected[i].baseAttack * (1f + floor * 0.1f);
+            // 층수별 스탯 증가 (현재 적용 x)
+            float hp = selected[i].baseHp;
+            float attack = selected[i].baseAttack;
 
             // 정수처리
             hp = Mathf.Round(hp);
