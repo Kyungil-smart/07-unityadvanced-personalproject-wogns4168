@@ -147,7 +147,9 @@ public class BattlePresenter
 
         _resultPanel.ShowDefeat(() =>
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            SaveManager.Instance.DeleteSave();
+            RunManager.Instance.StartNewRun();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
         });
     }
 }

@@ -9,7 +9,7 @@ public class RunManager : MonoBehaviour
     public List<CardData> allCards; // 보상으로 줄 수 있는 카드 풀 (Inspector에서 설정)
     public int baseMaxEnergy = 3;
 
-    public Deck currentDeck { get; private set; }
+    public Deck currentDeck { get; set; }
     public int Gold { get; private set; }
     public MapNode CurrentMapNode { get; private set; }
     public float CurrentHp { get; private set; }
@@ -93,5 +93,10 @@ public class RunManager : MonoBehaviour
     public void SetPlayerName(string name)
     {
         PlayerName = name;
+    }
+    
+    public void SetGold(int amount)
+    {
+        Gold = amount;
     }
 }
