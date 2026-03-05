@@ -23,6 +23,10 @@ public class MonsterIntentUI : MonoBehaviour
     private void Start()
     {
         _monster = GetComponent<MonsterBase>();
+        
+        if (hpCanvas == null)
+            hpCanvas = GameObject.Find("HpCanvas")?.GetComponent<Canvas>();
+        
         if (_monster == null || intentPrefab == null || hpCanvas == null) return;
 
         // HPBar처럼 Canvas에 자동 생성

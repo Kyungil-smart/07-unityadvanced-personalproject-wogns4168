@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7668692878738368154}
   - component: {fileID: 3603860795235071812}
   - component: {fileID: 6656327719734788757}
-  - component: {fileID: 120046558611768065}
+  - component: {fileID: -3936111937634157349}
+  - component: {fileID: 7174233897823090300}
   m_Layer: 0
-  m_Name: Gost
+  m_Name: GhostElite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,9 +87,9 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 1d5c2b524d7734240a82bc6b06f841c8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3bd6ae9ed48144bf6b53332d6b4a753a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.44, y: 0.52}
@@ -106,7 +107,7 @@ Animator:
   m_GameObject: {fileID: 5323585911447856454}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 780e8f9afa81d3947b3750bcd3498209, type: 2}
+  m_Controller: {fileID: 9100000, guid: ba8c399947107b04d9f834a0f0822dde, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBarSlider
   sliderPrefab: {fileID: 2808610392432130475, guid: 24b2a66fe855cab46ae6ed6da5c80d20, type: 3}
-  target: {fileID: 8384162881505726111, guid: 86a3787f2834a8a4bb0af087babf8278, type: 3}
+  target: {fileID: 8384162881505726111}
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -0.3, z: 0}
 --- !u!60 &6656327719734788757
@@ -196,7 +197,7 @@ PolygonCollider2D:
       - {x: 0.02, y: -0.21}
       - {x: 0.02, y: -0.17}
   m_UseDelaunayMesh: 1
---- !u!114 &120046558611768065
+--- !u!114 &-3936111937634157349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,6 +213,21 @@ MonoBehaviour:
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -2, z: 0}
   scale: {x: -0.8, y: -0.8, z: 0}
+--- !u!114 &7174233897823090300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323585911447856454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea901480e934533be3483c7db9a470e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GhostElite
+  maxHealth: 0
+  currentHealth: 0
+  animator: {fileID: 0}
 --- !u!1 &8701055678612382150
 GameObject:
   m_ObjectHideFlags: 0

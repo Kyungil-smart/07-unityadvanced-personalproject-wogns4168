@@ -1,13 +1,13 @@
-﻿// Skeleton.cs
+﻿// GhostElite.cs
 using System.Collections;
 using UnityEngine;
 
-public class Skeleton : MonsterBase
+public class GhostElite : MonsterBase
 {
     private float attackDamage;
     [SerializeField] private Animator animator;
 
-    public override string Name => "Skeleton";
+    public override string Name => "Ghost Elite";
     public override int IntentDamage => (int)attackDamage;
 
     public override void SetStats(float hp, float attack)

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 7668692878738368154}
   - component: {fileID: 3603860795235071812}
   - component: {fileID: 6656327719734788757}
-  - component: {fileID: -3936111937634157349}
+  - component: {fileID: 9216527266289191935}
+  - component: {fileID: -3509065202185861964}
   m_Layer: 0
-  m_Name: Gost (Elite)
+  m_Name: SkeletonElite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,14 +30,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5323585911447856454}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.02, y: -0.63, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8384162881505726111}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8083268090167179094
 SpriteRenderer:
   serializedVersion: 2
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3bd6ae9ed48144bf6b53332d6b4a753a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 70503d71a0abb4818823e52b03def6e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,7 +107,7 @@ Animator:
   m_GameObject: {fileID: 5323585911447856454}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ba8c399947107b04d9f834a0f0822dde, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5056f06f44d569f4f9fda62e306ea252, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBarSlider
   sliderPrefab: {fileID: 2808610392432130475, guid: 24b2a66fe855cab46ae6ed6da5c80d20, type: 3}
-  target: {fileID: 8384162881505726111, guid: 86a3787f2834a8a4bb0af087babf8278, type: 3}
+  target: {fileID: 8384162881505726111}
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -0.3, z: 0}
 --- !u!60 &6656327719734788757
@@ -172,7 +173,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.37, y: 0.65}
+    oldSize: {x: 0.44, y: 0.52}
     newSize: {x: 0.44, y: 0.52}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -196,7 +197,7 @@ PolygonCollider2D:
       - {x: 0.02, y: -0.21}
       - {x: 0.02, y: -0.17}
   m_UseDelaunayMesh: 1
---- !u!114 &-3936111937634157349
+--- !u!114 &9216527266289191935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -212,6 +213,21 @@ MonoBehaviour:
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -2, z: 0}
   scale: {x: -0.8, y: -0.8, z: 0}
+--- !u!114 &-3509065202185861964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323585911447856454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549277c0a8ac427ab6c803053b5de72b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkeletonElite
+  maxHealth: 0
+  currentHealth: 0
+  animator: {fileID: 0}
 --- !u!1 &8701055678612382150
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,4 +52,10 @@ public abstract class MonsterBase : Health, ITargetable
 
         player.TakeDamage(damage);
     }
+    
+    public virtual void SetStats(float hp, float attack)
+    {
+        maxHealth = hp;
+        currentHealth = hp;
+    }
 }

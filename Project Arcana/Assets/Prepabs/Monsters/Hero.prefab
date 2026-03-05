@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 3603860795235071812}
   - component: {fileID: 6656327719734788757}
   - component: {fileID: 4174052128659244170}
+  - component: {fileID: -6487291199748366252}
   m_Layer: 0
-  m_Name: Hero (Boss)
+  m_Name: Hero
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HPBarSlider
   sliderPrefab: {fileID: 2808610392432130475, guid: 24b2a66fe855cab46ae6ed6da5c80d20, type: 3}
-  target: {fileID: 8384162881505726111, guid: 86a3787f2834a8a4bb0af087babf8278, type: 3}
+  target: {fileID: 8384162881505726111}
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -0.3, z: 0}
 --- !u!60 &6656327719734788757
@@ -212,6 +213,21 @@ MonoBehaviour:
   hpCanvas: {fileID: 0}
   offset: {x: 0, y: -2, z: 0}
   scale: {x: -0.8, y: -0.8, z: 0}
+--- !u!114 &-6487291199748366252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323585911447856454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0bd4ebcf7c0428a81f9c3678f6eade8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeroBoss
+  maxHealth: 0
+  currentHealth: 0
+  animator: {fileID: 0}
 --- !u!1 &8701055678612382150
 GameObject:
   m_ObjectHideFlags: 0
