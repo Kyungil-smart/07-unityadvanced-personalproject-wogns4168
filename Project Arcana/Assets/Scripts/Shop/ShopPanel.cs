@@ -49,78 +49,86 @@ public class ShopPanel : MonoBehaviour
         SpawnShopCards();
     }
 
-    private void SpawnShopCards()
+   private void SpawnShopCards()
+{
+    foreach (var card in _spawnedCards) PoolManager.Instance.Despawn(card, cardPrefab);
+    foreach (var gold in _spawnedGoldGroups) Destroy(gold);
+    _spawnedCards.Clear();
+    _spawnedGoldGroups.Clear();
+
+    List<CardData> shopCards = RunManager.Instance.GetRandomRewardCards(5);
+
+    for (int i = 0; i < shopCards.Count && i < cardSlots.Length; i++)
     {
-        foreach (var card in _spawnedCards) Destroy(card);
-        foreach (var gold in _spawnedGoldGroups) Destroy(gold);
-        _spawnedCards.Clear();
-        _spawnedGoldGroups.Clear();
+        int price = Random.Range(cardMinCost, cardMaxCost + 1);
 
-        List<CardData> shopCards = RunManager.Instance.GetRandomRewardCards(5);
+        GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+        obj.transform.SetParent(cardSlots[i], false);
+        RectTransform cardRect = obj.GetComponent<RectTransform>();
+        cardRect.localScale = Vector3.one * 70f;
+        cardRect.anchoredPosition = Vector2.zero;
+        obj.GetComponent<CardView>().Setup(shopCards[i]);
 
-        for (int i = 0; i < shopCards.Count && i < cardSlots.Length; i++)
+        CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
+        if (dragArrow != null) dragArrow.enabled = false;
+
+        ShopCardInteraction interaction = obj.GetComponent<ShopCardInteraction>();
+        if (interaction != null)
         {
-            int price = Random.Range(cardMinCost, cardMaxCost + 1);
+            Destroy(interaction); // 기존 컴포넌트 제거
+        }
+        interaction = obj.AddComponent<ShopCardInteraction>();
+        interaction.Setup(shopCards[i], price, OnCardBought);
 
-            GameObject obj = Instantiate(cardPrefab, cardSlots[i]);
-            RectTransform cardRect = obj.GetComponent<RectTransform>();
-            cardRect.localScale = Vector3.one * 70f;
-            cardRect.anchoredPosition = Vector2.zero;
-            obj.GetComponent<CardView>().Setup(shopCards[i]);
+        _spawnedCards.Add(obj);
 
-            CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
-            if (dragArrow != null) dragArrow.enabled = false;
-
-            ShopCardInteraction interaction = obj.AddComponent<ShopCardInteraction>();
-            interaction.Setup(shopCards[i], price, OnCardBought);
-
-            _spawnedCards.Add(obj);
-
-            if (goldGroupPrefab != null)
-            {
-                GameObject goldGroup = Instantiate(goldGroupPrefab, cardSlots[i]);
-                RectTransform goldRect = goldGroup.GetComponent<RectTransform>();
-                goldRect.anchoredPosition = goldGroupOffset;
-                goldRect.GetComponentInChildren<TMP_Text>().text = price.ToString();
-                _spawnedGoldGroups.Add(goldGroup);
-                interaction.SetGoldGroup(goldGroup);
-            }
+        if (goldGroupPrefab != null)
+        {
+            GameObject goldGroup = Instantiate(goldGroupPrefab, cardSlots[i]);
+            RectTransform goldRect = goldGroup.GetComponent<RectTransform>();
+            goldRect.anchoredPosition = goldGroupOffset;
+            goldRect.GetComponentInChildren<TMP_Text>().text = price.ToString();
+            _spawnedGoldGroups.Add(goldGroup);
+            interaction.SetGoldGroup(goldGroup);
         }
     }
+}
 
-    private void SpawnRemoveCardList()
+private void SpawnRemoveCardList()
+{
+    foreach (var card in _removeCards) PoolManager.Instance.Despawn(card, cardPrefab);
+    _removeCards.Clear();
+
+    var deck = RunManager.Instance.currentDeck;
+    List<CardData> allCards = new List<CardData>(deck.drawPile);
+    allCards.AddRange(deck.discardPile);
+    allCards.AddRange(deck.exhaustPile);
+    allCards.AddRange(deck.hand);
+
+    foreach (var cardData in allCards)
     {
-        foreach (var card in _removeCards) Destroy(card);
-        _removeCards.Clear();
-        
-        var deck = RunManager.Instance.currentDeck;
+        GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+        obj.transform.SetParent(removeCardContainer, false);
+        RectTransform cardRect = obj.GetComponent<RectTransform>();
+        cardRect.localScale = Vector3.one * 70f;
+        obj.GetComponent<CardView>().Setup(cardData);
 
-        List<CardData> allCards = new List<CardData>(RunManager.Instance.currentDeck.drawPile);
-        allCards.AddRange(RunManager.Instance.currentDeck.discardPile);
-        allCards.AddRange(RunManager.Instance.currentDeck.exhaustPile);
-        allCards.AddRange(deck.hand);
+        CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
+        if (dragArrow != null) dragArrow.enabled = false;
 
-        foreach (var cardData in allCards)
+        RewardCardInteraction interaction = obj.GetComponent<RewardCardInteraction>()
+            ?? obj.AddComponent<RewardCardInteraction>();
+        interaction.Setup(cardData, (selected) =>
         {
-            GameObject obj = Instantiate(cardPrefab, removeCardContainer);
-            RectTransform cardRect = obj.GetComponent<RectTransform>();
-            cardRect.localScale = Vector3.one * 70f;
-            obj.GetComponent<CardView>().Setup(cardData);
+            RunManager.Instance.AddGold(-removeCardCost);
+            RunManager.Instance.RemoveCardFromDeck(selected);
+            removeCardPanel.SetActive(false);
+            FindAnyObjectByType<TopBarUI>()?.Refresh(); // 추가
+        });
 
-            CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
-            if (dragArrow != null) dragArrow.enabled = false;
-
-            RewardCardInteraction interaction = obj.AddComponent<RewardCardInteraction>();
-            interaction.Setup(cardData, (selected) =>
-            {
-                RunManager.Instance.AddGold(-removeCardCost);
-                RunManager.Instance.RemoveCardFromDeck(selected);
-                removeCardPanel.SetActive(false);
-            });
-
-            _removeCards.Add(obj);
-        }
+        _removeCards.Add(obj);
     }
+}
 
     private void OnCardBought(CardData card, int price) { }
 
@@ -150,5 +158,15 @@ public class ShopPanel : MonoBehaviour
         }
         removeCardPanel.SetActive(true);
         SpawnRemoveCardList();
+    }
+    
+    private void OnDestroy()
+    {
+        foreach (var card in _spawnedCards)
+            PoolManager.Instance.Despawn(card, cardPrefab);
+        foreach (var card in _removeCards)
+            PoolManager.Instance.Despawn(card, cardPrefab);
+        _spawnedCards.Clear();
+        _removeCards.Clear();
     }
 }

@@ -29,12 +29,13 @@ public class CardRewardPanel : MonoBehaviour
         panel.SetActive(true);
 
         foreach (var card in _spawnedCards)
-            Destroy(card);
+            PoolManager.Instance.Despawn(card, cardPrefab);
         _spawnedCards.Clear();
 
         for (int i = 0; i < rewardCards.Count && i < cardSlots.Length; i++)
         {
-            GameObject obj = Instantiate(cardPrefab, cardSlots[i]);
+            GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+            obj.transform.SetParent(cardSlots[i], false);
             RectTransform cardRect = obj.GetComponent<RectTransform>();
             cardRect.localScale = Vector3.one * 40f;
             cardRect.anchoredPosition = Vector2.zero;
@@ -43,12 +44,14 @@ public class CardRewardPanel : MonoBehaviour
             CardDragArrow dragArrow = obj.GetComponent<CardDragArrow>();
             if (dragArrow != null) dragArrow.enabled = false;
 
-            RewardCardInteraction interaction = obj.AddComponent<RewardCardInteraction>();
+            RewardCardInteraction interaction = obj.GetComponent<RewardCardInteraction>() 
+                                                ?? obj.AddComponent<RewardCardInteraction>();
             interaction.Setup(rewardCards[i], OnCardSelected);
 
             _spawnedCards.Add(obj);
         }
     }
+
 
     private void OnCardSelected(CardData selectedCard)
     {
@@ -87,7 +90,25 @@ public class CardRewardPanel : MonoBehaviour
     {
         panel.SetActive(false);
         foreach (var card in _spawnedCards)
-            Destroy(card);
+            PoolManager.Instance.Despawn(card, cardPrefab);
+        _spawnedCards.Clear();
+    }
+    
+    public void ForceHide()
+    {
+        if (panel != null) panel.SetActive(false);
+        foreach (var card in _spawnedCards)
+        {
+            if (card != null)
+                PoolManager.Instance.Despawn(card, cardPrefab);
+        }
+        _spawnedCards.Clear();
+    }
+    
+    private void OnDestroy()
+    {
+        foreach (var card in _spawnedCards)
+            PoolManager.Instance.Despawn(card, cardPrefab);
         _spawnedCards.Clear();
     }
 }

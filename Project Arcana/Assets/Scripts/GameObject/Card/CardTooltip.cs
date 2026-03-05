@@ -67,4 +67,9 @@ public class CardTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             _ => ""
         };
     }
+    
+    public void ForceHide()
+    {
+        if (tooltip != null) tooltip.SetActive(false);
+    }
 }

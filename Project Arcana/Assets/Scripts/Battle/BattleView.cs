@@ -16,10 +16,24 @@ public class BattleView : MonoBehaviour
     public event Action<CardView> OnCardSelected;
     public event Action<CardView, ITargetable> OnCardUsed;
 
+    private void OnHoverEnter(CardView _) => RefreshHandLayout();
+    private void OnHoverExit(CardView _) => RefreshHandLayout();
+
     public void ClearHand()
     {
         foreach (var view in _handViews)
-            Destroy(view.gameObject);
+        {
+            var dragArrow = view.GetComponent<CardDragArrow>();
+            if (dragArrow != null)
+            {
+                dragArrow.OnCardSelected -= HandleCardSelected;
+                dragArrow.OnCardDeselected -= HandleCardDeselected;
+            }
+            view.OnHoverEnter -= OnHoverEnter;
+            view.OnHoverExit -= OnHoverExit;
+
+            PoolManager.Instance.Despawn(view.gameObject, cardPrefab);
+        }
 
         _handViews.Clear();
         _selectedDragArrow = null;
@@ -32,7 +46,8 @@ public class BattleView : MonoBehaviour
 
         foreach (var card in hand)
         {
-            GameObject obj = Instantiate(cardPrefab, handArea, false);
+            GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+            obj.transform.SetParent(handArea, false);
             CardView view = obj.GetComponent<CardView>();
             view.Setup(card);
 
@@ -41,8 +56,8 @@ public class BattleView : MonoBehaviour
             dragArrow.OnCardSelected += HandleCardSelected;
             dragArrow.OnCardDeselected += HandleCardDeselected;
 
-            view.OnHoverEnter += _ => RefreshHandLayout();
-            view.OnHoverExit += _ => RefreshHandLayout();
+            view.OnHoverEnter += OnHoverEnter;
+            view.OnHoverExit += OnHoverExit;
 
             _handViews.Add(view);
         }
@@ -87,7 +102,7 @@ public class BattleView : MonoBehaviour
     {
         if (_selectedCardView == null) return;
 
-        OnCardUsed?.Invoke(_selectedCardView, target); // target 같이 전달
+        OnCardUsed?.Invoke(_selectedCardView, target);
 
         _selectedDragArrow?.Deselect();
         _selectedDragArrow = null;
@@ -107,7 +122,6 @@ public class BattleView : MonoBehaviour
         _selectedCardView = view;
         _selectedDragArrow = view.GetComponent<CardDragArrow>();
 
-        // Self 타겟이면 화살표 안 띄움
         if (view.GetCardData().targetType == CardTargetType.Self)
             return;
 

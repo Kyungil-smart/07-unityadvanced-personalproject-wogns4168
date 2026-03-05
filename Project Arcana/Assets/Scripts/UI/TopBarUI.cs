@@ -85,7 +85,8 @@ public class TopBarUI : MonoBehaviour
 
         foreach (var cardData in allCards)
         {
-            GameObject obj = Instantiate(cardPrefab, deckCardContainer);
+            GameObject obj = PoolManager.Instance.Spawn(cardPrefab);
+            obj.transform.SetParent(deckCardContainer, false);
             obj.GetComponent<RectTransform>().localScale = Vector3.one * 70f;
             obj.GetComponent<CardView>().Setup(cardData);
 
@@ -98,7 +99,16 @@ public class TopBarUI : MonoBehaviour
 
     private void ClearDeckCards()
     {
-        foreach (var card in _deckCards) Destroy(card);
+        foreach (var card in _deckCards)
+            PoolManager.Instance.Despawn(card, cardPrefab);
+        _deckCards.Clear();
+    }
+    
+
+    private void OnDestroy()
+    {
+        foreach (var card in _deckCards)
+            PoolManager.Instance.Despawn(card, cardPrefab);
         _deckCards.Clear();
     }
 }

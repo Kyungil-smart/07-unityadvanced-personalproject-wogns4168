@@ -155,10 +155,12 @@ public class MapManager : MonoBehaviour
     public void OnNodeCleared()
     {
         if (CurrentNode == null) return;
-
         CurrentNode.IsCleared = true;
 
-        // 보스 처치 시 엔딩
+        // 씬 전환 전 카드 Despawn
+        FindAnyObjectByType<BattleView>()?.ClearHand();
+        FindAnyObjectByType<CardRewardPanel>()?.ForceHide();
+
         if (CurrentNode.Type == NodeType.Boss)
         {
             SceneManager.LoadScene("EndingScene");

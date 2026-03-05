@@ -105,4 +105,9 @@ public class EventSceneController : MonoBehaviour
     {
         MapManager.Instance.OnNodeCleared();
     }
+    
+    private void OnDestroy()
+    {
+        cardRewardPanel?.ForceHide();
+    }
 }
