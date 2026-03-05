@@ -14,7 +14,7 @@ public class MonsterSpawner : MonoBehaviour
         LoadCSV();
 
         List<MonsterData> pool = GetMonsterPool(nodeType);
-        List<MonsterData> selected = SelectMonsters(pool, nodeType);
+        List<MonsterData> selected = SelectMonsters(pool, nodeType, floor);
         List<MonsterBase> spawned = new List<MonsterBase>();
 
         for (int i = 0; i < selected.Count; i++)
@@ -29,11 +29,12 @@ public class MonsterSpawner : MonoBehaviour
             float hp = selected[i].baseHp * (1f + floor * 0.2f);
             float attack = selected[i].baseAttack * (1f + floor * 0.1f);
 
-            // 5의 배수로 반올림
-            hp = Mathf.Round(hp / 5f) * 5f;
-            attack = Mathf.Round(attack / 5f) * 5f;
+            // 정수처리
+            hp = Mathf.Round(hp);
+            attack = Mathf.Round(attack);
             
             monster.SetStats(hp, attack);
+            
 
             spawned.Add(monster);
         }
@@ -47,7 +48,7 @@ public class MonsterSpawner : MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, "monsters.csv");
         string[] lines = File.ReadAllLines(path);
 
-        for (int i = 1; i < lines.Length; i++) // 첫줄 헤더 스킵
+        for (int i = 1; i < lines.Length; i++)
         {
             string[] col = lines[i].Split(',');
             _monsterTable.Add(new MonsterData
@@ -73,7 +74,7 @@ public class MonsterSpawner : MonoBehaviour
         return _monsterTable.FindAll(m => m.tier == tier);
     }
 
-    private List<MonsterData> SelectMonsters(List<MonsterData> pool, NodeType nodeType)
+    private List<MonsterData> SelectMonsters(List<MonsterData> pool, NodeType nodeType, int floor)
     {
         List<MonsterData> selected = new List<MonsterData>();
 
@@ -91,7 +92,28 @@ public class MonsterSpawner : MonoBehaviour
         }
         else
         {
-            int count = Random.Range(1, 4); // 1~3마리
+            int count;
+            if (floor == 0)
+            {
+                count = 1; // 1층 무조건 1마리
+            }
+            else if (floor <= 3)
+            {
+                // 2~4층: 1마리 60%, 2마리 40%
+                count = Random.Range(0, 100) < 60 ? 1 : 2;
+            }
+            else if (floor <= 6)
+            {
+                // 5~7층: 1마리 30%, 2마리 50%, 3마리 20%
+                int rand = Random.Range(0, 100);
+                count = rand < 30 ? 1 : rand < 80 ? 2 : 3;
+            }
+            else
+            {
+                // 8~9층: 2마리 40%, 3마리 60%
+                count = Random.Range(0, 100) < 40 ? 2 : 3;
+            }
+
             List<MonsterData> shuffled = new List<MonsterData>(pool);
             Shuffle(shuffled);
             for (int i = 0; i < count; i++)
@@ -116,13 +138,4 @@ public class MonsterSpawner : MonoBehaviour
             (list[i], list[j]) = (list[j], list[i]);
         }
     }
-}
-
-public class MonsterData
-{
-    public string name;
-    public string tier;
-    public float baseHp;
-    public float baseAttack;
-    public string prefabName;
 }
