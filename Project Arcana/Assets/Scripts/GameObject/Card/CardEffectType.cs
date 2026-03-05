@@ -5,7 +5,7 @@
     Heal,          // 힐
     ApplyPoison,   // 독
     ApplyWeak,     // 약화
-    ApplyBreak,    // 브레이크
+    ApplyBreak,    // 취약
     DrawCard,      // 드로우
     GainEnergy,    // 에너지 증가
     DealDamageEqualToBlock // 방어도만큼 데미지
