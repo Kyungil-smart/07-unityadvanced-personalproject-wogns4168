@@ -40,8 +40,8 @@ public abstract class MonsterBase : Health, ITargetable
 
     public override void Die()
     {
+        GetComponent<MonsterIntentUI>()?.DestroyUI();
         base.Die();
-        Reward();
     }
     
     protected void Attack(Player player, float damage)

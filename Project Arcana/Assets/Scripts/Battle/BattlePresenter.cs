@@ -24,13 +24,14 @@ public class BattlePresenter
         _effectProcessor = new CardEffectProcessor(context);
         
         int floor = RunManager.Instance.CurrentMapNode?.Floor ?? 0;
+        int monsterCount = _model.Monsters.Count;
         NodeType nodeType = RunManager.Instance.CurrentMapNode?.Type ?? NodeType.Battle;
 
         _goldReward = nodeType switch
         {
-            NodeType.Elite => 60 + floor * 8,   // 엘리트: 60~132골드
-            NodeType.Boss => 500,                // 보스: 고정
-            _ => 30 + floor * 5                  // 일반: 30~72골드
+            NodeType.Elite => (25 + floor * 5) * monsterCount,
+            NodeType.Boss => 100,
+            _ => (10 + floor * 3) * monsterCount
         };
 
         _view.OnCardSelected += SelectCard;

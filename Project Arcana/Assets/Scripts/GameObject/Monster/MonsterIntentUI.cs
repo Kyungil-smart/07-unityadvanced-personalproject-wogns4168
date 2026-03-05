@@ -82,4 +82,13 @@ public class MonsterIntentUI : MonoBehaviour
         if (_instance != null)
             Destroy(_instance);
     }
+    
+    public void DestroyUI()
+    {
+        if (_instance != null)
+        {
+            Destroy(_instance);
+            _instance = null;
+        }
+    }
 }
