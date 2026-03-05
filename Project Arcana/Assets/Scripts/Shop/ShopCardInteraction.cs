@@ -58,6 +58,8 @@ public class ShopCardInteraction : MonoBehaviour, IPointerEnterHandler, IPointer
         if (_soldOutOverlay != null) _soldOutOverlay.SetActive(true);
         if (_goldGroup != null) _goldGroup.SetActive(false);
         transform.localScale = _originalScale;
+        
+        FindAnyObjectByType<TopBarUI>()?.Refresh();
         _onSelected?.Invoke(_cardData, _price);
     }
 }

@@ -48,6 +48,18 @@ public class BattleHUD : MonoBehaviour
     public void SetEndTurnCallback(System.Action callback)
     {
         endTurnButton.onClick.RemoveAllListeners();
-        endTurnButton.onClick.AddListener(() => callback());
+        endTurnButton.onClick.AddListener(() =>
+        {
+            // 선택된 카드 화살표 제거
+            foreach (var dragArrow in FindObjectsByType<CardDragArrow>(FindObjectsSortMode.None))
+            {
+                if (dragArrow.CardView.IsSelected)
+                {
+                    dragArrow.Deselect();
+                    break;
+                }
+            }
+            callback();
+        });
     }
 }
