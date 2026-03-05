@@ -40,8 +40,8 @@ public abstract class MonsterBase : Health, ITargetable
 
     public override void Die()
     {
+        GetComponent<MonsterIntentUI>()?.DestroyUI();
         base.Die();
-        Reward();
     }
     
     protected void Attack(Player player, float damage)
@@ -51,5 +51,11 @@ public abstract class MonsterBase : Health, ITargetable
             damage *= WeakStatus.DamageMultiplier;
 
         player.TakeDamage(damage);
+    }
+    
+    public virtual void SetStats(float hp, float attack)
+    {
+        maxHealth = hp;
+        currentHealth = hp;
     }
 }

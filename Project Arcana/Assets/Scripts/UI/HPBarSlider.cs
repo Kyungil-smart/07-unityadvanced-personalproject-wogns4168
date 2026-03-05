@@ -23,6 +23,10 @@ public class HPBarSlider : MonoBehaviour
     {
         _health = GetComponent<Health>();
         _playerHealth = GetComponent<PlayerHealth>();
+        
+        // hpCanvas 자동 찾기
+        if (hpCanvas == null)
+            hpCanvas = GameObject.Find("HpCanvas")?.GetComponent<Canvas>();
 
         if (_health == null || sliderPrefab == null || target == null || hpCanvas == null) return;
 

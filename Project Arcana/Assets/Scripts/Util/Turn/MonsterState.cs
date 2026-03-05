@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 public class MonsterState : ITurn
 {
@@ -15,25 +16,40 @@ public class MonsterState : ITurn
 
     public void Enter()
     {
+        List<MonsterBase> aliveMonsters = new List<MonsterBase>();
         foreach (var monster in _model.Monsters)
         {
             if (monster == null || monster.isDead) continue;
-            monster.StartCoroutine(ActAndEndTurn(monster));
+            aliveMonsters.Add(monster);
+        }
+
+        if (aliveMonsters.Count == 0)
+        {
+            _turnSystem.ChangeTurn(_turnSystem.playerState);
             return;
         }
 
-        _turnSystem.ChangeTurn(_turnSystem.playerState);
+        // 첫 번째 몬스터에서 코루틴 시작 (순서대로 실행)
+        aliveMonsters[0].StartCoroutine(ActAllMonsters(aliveMonsters));
     }
 
-    private IEnumerator ActAndEndTurn(MonsterBase monster)
+    private IEnumerator ActAllMonsters(List<MonsterBase> monsters)
     {
-        // 몬스터 턴 시작 상태이상 처리
-        monster.StatusManager.OnTurnStart();
+        foreach (var monster in monsters)
+        {
+            if (monster == null || monster.isDead) continue;
 
-        yield return monster.StartCoroutine(monster.Act());
+            monster.StatusManager.OnTurnStart();
+            yield return monster.StartCoroutine(monster.Act());
+            monster.StatusManager.OnTurnEnd();
 
-        // 몬스터 턴 종료 상태이상 처리
-        monster.StatusManager.OnTurnEnd();
+            // 전투 종료 체크
+            if (_model.CheckBattleResult() != BattleResult.None)
+            {
+                _presenter.OnMonsterTurnEnd();
+                yield break;
+            }
+        }
 
         _presenter.OnMonsterTurnEnd();
 

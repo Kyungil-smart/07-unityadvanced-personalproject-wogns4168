@@ -1,0 +1,7 @@
+name,tier,baseHp,baseAttack,prefabName
+Skeleton,Normal,25,6,Skeleton
+Ghost,Normal,20,8,Ghost
+HellGato,Normal,30,4,HellGato
+SkeletonElite,Elite,60,10,SkeletonElite
+GhostElite,Elite,50,12,GhostElite
+Hero,Boss,500,22,HeroBoss
