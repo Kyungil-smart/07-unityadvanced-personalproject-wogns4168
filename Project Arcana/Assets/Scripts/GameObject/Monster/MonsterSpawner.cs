@@ -84,7 +84,12 @@ public class MonsterSpawner : MonoBehaviour
         }
         else if (nodeType == NodeType.Elite)
         {
-            int count = Random.Range(1, 3); // 1~2마리
+            int count;
+            if (floor <= 5)
+                count = 1; // 초중반 1마리
+            else
+                count = Random.Range(1, 3); // 후반 1~2마리
+        
             List<MonsterData> shuffled = new List<MonsterData>(pool);
             Shuffle(shuffled);
             for (int i = 0; i < count; i++)
