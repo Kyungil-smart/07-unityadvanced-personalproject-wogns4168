@@ -5,6 +5,8 @@ public class RunManager : MonoBehaviour
 {
     public static RunManager Instance { get; private set; }
 
+    public int MaxEnergy { get; private set; }
+    
     public List<CardData> startingDeck = new List<CardData>();
     public List<CardData> allCards; // 보상으로 줄 수 있는 카드 풀 (Inspector에서 설정)
     public int baseMaxEnergy = 3;
@@ -37,6 +39,7 @@ public class RunManager : MonoBehaviour
         Gold = 100;
         CurrentHp = 100; // 초기화 (0이면 BattleInitializer에서 maxHealth 사용)
         MaxHp = 100;
+        MaxEnergy = baseMaxEnergy;
     }
 
     public void AddGold(int amount)
@@ -98,5 +101,10 @@ public class RunManager : MonoBehaviour
     public void SetGold(int amount)
     {
         Gold = amount;
+    }
+    
+    public void IncreaseMaxEnergy(int amount = 1)
+    {
+        MaxEnergy += amount;
     }
 }

@@ -59,7 +59,47 @@ private void InitEvents()
             spriteIndex = 4,
             choice1 = new EventChoice { choiceText = "구입한다 (골드 80 잃고 카드 2장 획득)", effectType = EventEffectType.LoseGoldAndGainCards, value = 80f },
             choice2 = new EventChoice { choiceText = "거절한다 (골드 20 획득)", effectType = EventEffectType.GainGold, value = 20f }
+        },
+        
+        new EventData
+        {
+            title = "신비한 오브",
+            description = "빛나는 오브가 당신의 힘을 시험합니다.",
+            spriteIndex = 5, // 새 스프라이트 추가하거나 기존 인덱스 사용
+            choice1 = new EventChoice
+            {
+                choiceText = "피를 바친다 (HP 20 잃고 최대 에너지 +1)",
+                effectType = EventEffectType.LoseHpAndGainEnergy,
+                value = 20
+            },
+            choice2 = new EventChoice
+            {
+                choiceText = "골드를 바친다 (골드 80 잃고 최대 에너지 +1)",
+                effectType = EventEffectType.LoseGoldAndGainEnergy,
+                value = 80
+            }
+        },
+        
+        new EventData
+        {
+            title = "신비한 오브",
+            description = "빛나는 오브가 당신의 힘을 시험합니다.",
+            spriteIndex = 5, // 새 스프라이트 추가하거나 기존 인덱스 사용
+            choice1 = new EventChoice
+            {
+                choiceText = "피를 바친다 (HP 20 잃고 최대 에너지 +1)",
+                effectType = EventEffectType.LoseHpAndGainEnergy,
+                value = 20
+            },
+            choice2 = new EventChoice
+            {
+                choiceText = "골드를 바친다 (골드 80 잃고 최대 에너지 +1)",
+                effectType = EventEffectType.LoseGoldAndGainEnergy,
+                value = 80
+            }
         }
+        
+        
     };
 }
 

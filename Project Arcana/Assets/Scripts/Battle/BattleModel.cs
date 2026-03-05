@@ -17,7 +17,7 @@ public class BattleModel
         Deck = deck;
         _player = player;
 
-        MaxEnergy = RunManager.Instance != null ? RunManager.Instance.baseMaxEnergy : 3;
+        MaxEnergy = RunManager.Instance != null ? RunManager.Instance.MaxEnergy : 3;
         CurrentEnergy = MaxEnergy;
     }
 

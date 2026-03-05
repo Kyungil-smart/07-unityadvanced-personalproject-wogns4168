@@ -84,6 +84,18 @@ public class EventSceneController : MonoBehaviour
                 List<CardData> goldCards = RunManager.Instance.GetRandomRewardCards(3);
                 cardRewardPanel.Show(goldCards, Leave, 2);
                 break;
+            
+            case EventEffectType.LoseHpAndGainEnergy:
+                if (LoseHp(choice.value)) return;
+                RunManager.Instance.IncreaseMaxEnergy(1);
+                Leave();
+                break;
+
+            case EventEffectType.LoseGoldAndGainEnergy:
+                RunManager.Instance.AddGold(-Mathf.Min((int)choice.value, RunManager.Instance.Gold));
+                RunManager.Instance.IncreaseMaxEnergy(1);
+                Leave();
+                break;
         }
     }
 
