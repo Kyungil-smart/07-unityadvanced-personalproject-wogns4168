@@ -1,1 +1,115 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=22871648&assignment_repo_type=AssignmentRepo)
+# Project Arcana
+
+> Unity 기반 턴제 덱빌딩 로그라이크 게임 (7일 개인 프로젝트)
+
+---
+
+## 게임 소개
+
+Project Arcana는 카드를 사용해 몬스터와 싸우고, 덱을 성장시키며 10층의 던전을 탐험하는 턴제 로그라이크 게임입니다.
+전투마다 새로운 카드를 획득하고, 상점과 이벤트를 통해 캐릭터를 강화하며 최종 보스를 처치하는 것이 목표입니다.
+
+---
+
+## 핵심 기능
+
+### 전투 시스템
+- 턴제 카드 기반 전투
+- 카드를 드래그해서 적에게 사용하는 직관적인 조작
+- 에너지 시스템 (매 턴 충전, 카드마다 소모량 다름)
+- 상태이상: 독 / 약화 / 취약
+
+### 덱빌딩
+- 전투 승리 후 카드 보상 선택
+- 상점에서 카드 구매 / 카드 제거
+- 드로우 파일 / 버림패 / 소멸 파일 구분
+
+### 맵 시스템
+- 10층 랜덤 생성 맵
+- 노드 타입: 일반 전투 / 엘리트 / 보스 / 상점 / 이벤트
+- 층수에 따른 분기 경로 선택
+
+### 몬스터
+| 등급 | 종류 |
+|------|------|
+| 일반 | Skeleton, Ghost, HellGato |
+| 엘리트 | SkeletonElite, GhostElite |
+| 보스 | Hero |
+
+- CSV 기반 몬스터 데이터 관리
+- 층수에 따른 등장 수 조정 (1~3마리)
+- 몬스터 행동 의도(Intent) UI 표시
+
+### 상점
+- 카드 5종 랜덤 판매
+- 체력 회복 (최대 체력의 30%)
+- 카드 제거
+- 최대 에너지 증가
+
+### 이벤트
+- 다양한 선택지 이벤트 (체력 손실 / 골드 손실 / 카드 획득 / 에너지 증가 등)
+
+---
+
+## 기술적 구현
+
+### 디자인 패턴
+- **MVP 패턴**: BattleModel / BattleView / BattlePresenter 분리
+- **오브젝트 풀 패턴**: 카드 GameObject 재사용 (PoolManager)
+- **싱글톤 패턴**: GameManager, RunManager, MapManager, AudioManager 등
+
+### 저장 시스템
+- JSON 직렬화를 통한 게임 세이브/로드 (`Application.persistentDataPath`)
+- 저장 데이터: 플레이어 정보, 덱, 맵 진행 상황, 현재 노드
+
+### 사운드
+- BGM: 씬별 자동 재생 (타이틀 / 맵 / 전투 / 상점 / 이벤트)
+- SFX: 카드 사용 / 버튼 클릭 / 승리 / 패배
+- BGM / SFX 볼륨 각각 조절 (PlayerPrefs 저장)
+
+### 튜토리얼
+- 첫 실행 시 자동 표시 (PlayerPrefs 기반)
+- 카드 사용법 / 에너지 / 턴 종료 / 덱 구조 / 몬스터 Intent / 환경설정 안내
+
+---
+
+## 조작 방법
+
+| 입력 | 동작 |
+|------|------|
+| 카드 클릭 | 카드 선택 |
+| 선택된 카드 → 적 드래그 | 카드 사용 |
+| 우클릭 | 카드 선택 취소 |
+| 턴 종료 버튼 | 몬스터 턴으로 전환 |
+| ESC | 설정 패널 열기/닫기 |
+
+---
+
+## 개발 환경
+
+- **엔진**: Unity 2022.x
+- **언어**: C#
+- **UI**: Unity UI (uGUI), TextMeshPro
+
+---
+
+## 프로젝트 구조
+
+```
+Assets/
+├── Scripts/
+│   ├── Battle/         # 전투 관련 (MVP 패턴)
+│   ├── Card/           # 카드 데이터 및 뷰
+│   ├── Manager/        # 싱글톤 매니저들
+│   ├── Map/            # 맵 생성 및 노드
+│   ├── Monster/        # 몬스터 로직
+│   ├── Shop/           # 상점
+│   ├── Event/          # 이벤트
+│   └── Util/           # 유틸리티 (턴 시스템, 풀 매니저 등)
+├── Prefabs/
+│   ├── Card/
+│   ├── Monsters/
+│   └── UI/
+└── StreamingAssets/
+    └── monsters.csv    # 몬스터 데이터
+```
