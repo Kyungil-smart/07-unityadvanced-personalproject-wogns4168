@@ -18,16 +18,7 @@ public class SettingsPanel : MonoBehaviour
     private void Start()
     {
         panel.SetActive(false);
-        settingsButton.onClick.AddListener(() =>
-        {
-            panel.SetActive(true);
-            string sceneName = SceneManager.GetActiveScene().name;
-            saveButton.interactable = sceneName == "MapScene";
-
-            // 슬라이더 현재 볼륨으로 초기화
-            if (bgmSlider != null) bgmSlider.value = AudioManager.Instance.BGMVolume;
-            if (sfxSlider != null) sfxSlider.value = AudioManager.Instance.SFXVolume;
-        });
+        settingsButton.onClick.AddListener(OpenPanel);
 
         closeButton.onClick.AddListener(() => panel.SetActive(false));
         saveButton.onClick.AddListener(OnSave);
@@ -36,6 +27,17 @@ public class SettingsPanel : MonoBehaviour
 
         if (bgmSlider != null) bgmSlider.onValueChanged.AddListener(AudioManager.Instance.SetBGMVolume);
         if (sfxSlider != null) sfxSlider.onValueChanged.AddListener(AudioManager.Instance.SetSFXVolume);
+    }
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (panel.activeSelf)
+                panel.SetActive(false);
+            else
+                OpenPanel();
+        }
     }
 
     private void OnSave()
@@ -48,6 +50,16 @@ public class SettingsPanel : MonoBehaviour
     {
         RunManager.Instance.StartNewRun();
         SceneManager.LoadScene("TitleScene");
+    }
+    
+    private void OpenPanel()
+    {
+        panel.SetActive(true);
+        string sceneName = SceneManager.GetActiveScene().name;
+        saveButton.interactable = sceneName == "MapScene";
+
+        if (bgmSlider != null) bgmSlider.value = AudioManager.Instance.BGMVolume;
+        if (sfxSlider != null) sfxSlider.value = AudioManager.Instance.SFXVolume;
     }
 
     private void OnQuit()
