@@ -1450,6 +1450,7 @@ GameObject:
   - component: {fileID: 297312625}
   - component: {fileID: 297312624}
   - component: {fileID: 297312627}
+  - component: {fileID: 297312628}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1590,6 +1591,18 @@ MonoBehaviour:
   pressedTextColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   hoverScale: 1.15
   pressedScale: 0.95
+--- !u!114 &297312628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297312622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &300428439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5270,6 +5283,7 @@ GameObject:
   - component: {fileID: 1191823993}
   - component: {fileID: 1191823992}
   - component: {fileID: 1191823991}
+  - component: {fileID: 1191823996}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -5425,6 +5439,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191823989}
   m_CullTransparentMesh: 1
+--- !u!114 &1191823996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191823989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &1324187513
 GameObject:
   m_ObjectHideFlags: 0
@@ -6012,6 +6038,7 @@ GameObject:
   - component: {fileID: 1433631040}
   - component: {fileID: 1433631039}
   - component: {fileID: 1433631042}
+  - component: {fileID: 1433631043}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -6152,6 +6179,18 @@ MonoBehaviour:
   pressedTextColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   hoverScale: 1.15
   pressedScale: 0.95
+--- !u!114 &1433631043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433631037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &1441855501
 GameObject:
   m_ObjectHideFlags: 0
@@ -6872,6 +6911,7 @@ GameObject:
   - component: {fileID: 1593370276}
   - component: {fileID: 1593370275}
   - component: {fileID: 1593370274}
+  - component: {fileID: 1593370279}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -7027,6 +7067,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593370272}
   m_CullTransparentMesh: 1
+--- !u!114 &1593370279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593370272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &1599199473
 GameObject:
   m_ObjectHideFlags: 0
@@ -8879,6 +8931,7 @@ GameObject:
   - component: {fileID: 2017274121}
   - component: {fileID: 2017274120}
   - component: {fileID: 2017274119}
+  - component: {fileID: 2017274123}
   m_Layer: 5
   m_Name: LoadButton
   m_TagString: Untagged
@@ -9019,6 +9072,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017274117}
   m_CullTransparentMesh: 1
+--- !u!114 &2017274123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017274117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &2036055067
 GameObject:
   m_ObjectHideFlags: 0

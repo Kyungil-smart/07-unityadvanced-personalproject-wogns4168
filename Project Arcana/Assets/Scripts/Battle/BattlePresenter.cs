@@ -63,18 +63,18 @@ public class BattlePresenter
     private void UseCard(CardView cardView, ITargetable target)
     {
         CardData card = cardView.GetCardData();
-
         bool success = _effectProcessor.Process(card, target);
         if (!success) return;
+
+        AudioManager.Instance?.PlayMouseClickSFX(); // 추가
 
         _model.UseCard(card);
         _view.SpawnHand(_model.CurrentHand);
         RefreshHUD();
-        
+
         foreach (var monster in _model.Monsters)
             monster.GetComponent<MonsterIntentUI>()?.UpdateIntent();
 
-        // 카드 사용 후 전투 종료 체크
         CheckBattleEnd();
     }
     private void OnEndTurnPressed()
@@ -125,6 +125,7 @@ public class BattlePresenter
     {
         _hud.SetEndTurnInteractable(false);
         _view.ClearHand();
+        AudioManager.Instance?.PlayVictorySFX(); // 추가
 
         _resultPanel.ShowVictory(_goldReward,
             onGoldCollect: () => { },
@@ -133,17 +134,19 @@ public class BattlePresenter
                 List<CardData> rewardCards = RunManager.Instance.GetRandomRewardCards();
                 _rewardPanel.Show(rewardCards, () =>
                 {
-                    _resultPanel.HideAll(); // 카드 선택 후 dimPanel까지 끄기
+                    _resultPanel.HideAll();
                     MapManager.Instance.OnNodeCleared();
                 });
             }
         );
     }
 
+
     private void OnDefeat()
     {
         _hud.SetEndTurnInteractable(false);
         _view.ClearHand();
+        AudioManager.Instance?.PlayDefeatSFX(); // 추가
 
         _resultPanel.ShowDefeat(() =>
         {

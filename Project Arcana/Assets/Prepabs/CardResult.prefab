@@ -453,6 +453,7 @@ GameObject:
   - component: {fileID: 3137889618476103094}
   - component: {fileID: 5449781597130781914}
   - component: {fileID: 4870796872479689970}
+  - component: {fileID: 4266681242058942289}
   m_Layer: 5
   m_Name: SkipButton
   m_TagString: Untagged
@@ -562,6 +563,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4266681242058942289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8331797742373503196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &8563159551382171063
 GameObject:
   m_ObjectHideFlags: 0

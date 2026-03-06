@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 190802724}
   - component: {fileID: 190802723}
   - component: {fileID: 190802722}
+  - component: {fileID: 190802725}
   m_Layer: 5
   m_Name: SkipButton
   m_TagString: Untagged
@@ -513,6 +514,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190802720}
   m_CullTransparentMesh: 1
+--- !u!114 &190802725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190802720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!1 &331611149
 GameObject:
   m_ObjectHideFlags: 0
@@ -3558,6 +3571,7 @@ GameObject:
   - component: {fileID: 2848207778470314892}
   - component: {fileID: 2128830315380791055}
   - component: {fileID: 1311117308029087619}
+  - component: {fileID: 8315334354978292582}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -4161,6 +4175,18 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 180}
   m_SizeDelta: {x: 89.0567, y: 50.983276}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8315334354978292582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185934965738004602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f1dc984ea714c16b339cf76a6ac9b41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonSFX
 --- !u!224 &8453572362842977071
 RectTransform:
   m_ObjectHideFlags: 0

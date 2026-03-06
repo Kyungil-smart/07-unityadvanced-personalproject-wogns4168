@@ -50,7 +50,8 @@ public class BattleHUD : MonoBehaviour
         endTurnButton.onClick.RemoveAllListeners();
         endTurnButton.onClick.AddListener(() =>
         {
-            // 선택된 카드 화살표 제거
+            AudioManager.Instance?.PlayButtonPressSFX(); // 추가
+
             foreach (var dragArrow in FindObjectsByType<CardDragArrow>(FindObjectsSortMode.None))
             {
                 if (dragArrow.CardView.IsSelected)
