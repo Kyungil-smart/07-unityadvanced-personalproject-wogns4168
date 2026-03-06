@@ -41,6 +41,12 @@ public class BattleResultPanel : MonoBehaviour
         cardRewardButton.onClick.RemoveAllListeners();
         cardRewardButton.onClick.AddListener(() =>
         {
+            // 골드 안 받았으면 자동 수령
+            if (goldButton.gameObject.activeSelf)
+            {
+                RunManager.Instance.AddGold(goldReward);
+                goldButton.gameObject.SetActive(false);
+            }
             Hide();
             onCardReward?.Invoke();
         });

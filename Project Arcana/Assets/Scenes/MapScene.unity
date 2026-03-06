@@ -1876,6 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapView
   nodePrefab: {fileID: 1725510109258845713, guid: 08f7094edbddb0347826dfb8b4004607, type: 3}
   content: {fileID: 1631276354}
+  scrollRect: {fileID: 303639315}
 --- !u!4 &1649882561
 Transform:
   m_ObjectHideFlags: 0

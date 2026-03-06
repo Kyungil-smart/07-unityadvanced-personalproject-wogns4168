@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip victorySFX;
     [SerializeField] private AudioClip defeatSFX;
 
-    private float _bgmVolume = 0.3f;
+    private float _bgmVolume = 0.1f;
     private float _sfxVolume = 0.3f;
 
     private void Awake()
@@ -29,8 +29,8 @@ public class AudioManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        _bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 1f);
-        _sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        _bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 0.1f);
+        _sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.3f);
         bgmSource.volume = _bgmVolume;
         sfxSource.volume = _sfxVolume;
     }

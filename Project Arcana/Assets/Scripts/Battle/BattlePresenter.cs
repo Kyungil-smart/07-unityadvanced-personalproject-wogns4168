@@ -125,7 +125,8 @@ public class BattlePresenter
     {
         _hud.SetEndTurnInteractable(false);
         _view.ClearHand();
-        AudioManager.Instance?.PlayVictorySFX(); // 추가
+        AudioManager.Instance?.PlayVictorySFX();
+        
 
         _resultPanel.ShowVictory(_goldReward,
             onGoldCollect: () => { },

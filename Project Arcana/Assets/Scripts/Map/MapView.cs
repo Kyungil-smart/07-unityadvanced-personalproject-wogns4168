@@ -11,6 +11,7 @@ public class MapView : MonoBehaviour
     [SerializeField] private RectTransform content;
     private float floorHeight = 400f;
     private float nodeSpacing = 400f;
+    [SerializeField] private ScrollRect scrollRect;
 
     private List<List<MapNodeView>> _nodeViews = new List<List<MapNodeView>>();
 
@@ -20,6 +21,7 @@ public class MapView : MonoBehaviour
             MapManager.Instance.GenerateMap();
 
         DrawMap();
+        ScrollToCurrentNode();
     }
 
     private void DrawMap()
@@ -90,5 +92,18 @@ public class MapView : MonoBehaviour
         rect.sizeDelta = new Vector2(dir.magnitude, 3f);
         rect.anchoredPosition = from + dir * 0.5f;
         rect.localRotation = Quaternion.FromToRotation(Vector3.right, dir);
+    }
+    
+    private void ScrollToCurrentNode()
+    {
+        MapNode currentNode = MapManager.Instance.CurrentNode;
+        if (currentNode == null || scrollRect == null) return;
+
+        int floor = currentNode.Floor;
+        int totalFloors = MapManager.Instance.Floors.Count;
+
+        // 0 = 하단, 1 = 상단
+        float normalizedY = (float)floor / (totalFloors - 1);
+        scrollRect.verticalNormalizedPosition = normalizedY;
     }
 }

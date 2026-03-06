@@ -36,6 +36,9 @@ public class TopBarUI : MonoBehaviour
     {
         if (hpText != null)
             hpText.text = $"{(int)RunManager.Instance.CurrentHp} / {(int)RunManager.Instance.MaxHp}";
+        
+        if (goldText != null)
+            goldText.text = RunManager.Instance.Gold.ToString();
     }
 
     public void Refresh()
