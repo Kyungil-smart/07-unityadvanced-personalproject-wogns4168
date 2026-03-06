@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip defeatSFX;
 
     private float _bgmVolume = 0.3f;
-    private float _sfxVolume = 0.8f;
+    private float _sfxVolume = 0.3f;
 
     private void Awake()
     {
